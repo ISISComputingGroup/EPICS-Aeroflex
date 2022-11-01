@@ -1,0 +1,24 @@
+InTerminator = '\n';
+OutTerminator = '\n';
+
+setCarFreq {
+	out "CFRQ:VALUE %f%(\$1)s";
+}
+
+getRFLevel {
+	out "rflv?";
+	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %f;INC %*f;%*s";
+}
+
+setRFLevel {
+	out "RFLV:VALUE %f";
+}
+
+getError {
+	out "error?";
+	in "%/(.{0,39})/";
+}
+
+reset {
+	out "*RST";
+}
