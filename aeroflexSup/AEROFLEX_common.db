@@ -23,7 +23,7 @@ record(ai, "$(P)CARRIER_FREQ")
     field(DESC, "Get carrier frequency")
     field(DTYP, "stream")
 	field(FLNK, "$(P)CALC_RETURN_CAR_FREQ")
-    field(INP, "@aeroflex.proto getCarrierFrequency $(PORT)")
+    field(INP, "@aeroflex_$(DEV_TYPE).proto getCarrierFrequency $(PORT)")
 
 	field(PREC, "2")
     info(INTEREST, "HIGH")
@@ -45,10 +45,9 @@ record(ao, "$(P)CARRIER_FREQ:SP_NO_ACTION")
 	field(PREC, "2")
 }
 
-record(mbbi, "$(P)CARRIER_FREQ_UNITS")
+record(mbbo, "$(P)CARRIER_FREQ_UNITS")
 {
-    field(SCAN, "Passive")
-    field(DESC, "Modulation")
+    field(DESC, "Carrier Frequency Units readout")
 	
 	info(autosaveFields, "VAL")
 
@@ -56,15 +55,11 @@ record(mbbi, "$(P)CARRIER_FREQ_UNITS")
 	field(ONST, "kHZ")
 	field(TWST, "MHZ")
 	field(THST, "GHZ")
-	
-    info(INTEREST, "HIGH")
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:MODE")
 }
 
 record(mbbo, "$(P)CARRIER_FREQ_UNITS:SP")
 {
-    field(DESC, "Set modulation")
+    field(DESC, "Set Carrier Frequency Units")
 	
 	info(autosaveFields, "VAL")
 	
@@ -72,15 +67,7 @@ record(mbbo, "$(P)CARRIER_FREQ_UNITS:SP")
 	field(ONST, "kHZ")
 	field(TWST, "MHZ")
 	field(THST, "GHZ")
-}
-
-record(dfanout, "$(P)SAVE_CAR_FREQ_UNIT")
-{
-    field(DESC, "Save set car freq units")
-    field(SCAN, "Passive")
-    field(OMSL, "closed_loop")
-    field(DOL, "$(P)CARRIER_FREQ_UNITS:SP")
-    field(OUTA, "$(P)CARRIER_FREQ_UNITS PP")
+	field(PINI, "YES")
 }
 
 record(ao, "$(P)CAR_FREQ_CONV")

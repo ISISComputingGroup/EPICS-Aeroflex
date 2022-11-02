@@ -6,19 +6,6 @@ getCarrierFrequency {
 	in ":CFRQ:VALUE %f;INC %*f;MODE %*s";
 }
 
-setCarFreq {
-	out "CFRQ:VALUE %f%(\$1)s";
-}
-
-getRFLevel {
-	out "rflv?";
-	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %f;INC %*f;%*s ";
-}
-
-setRFLevel {
-	out "RFLV:VALUE %f";
-}
-
 getModulation {
 	out "mode?";
 	in ":MODE %{AM,FM,PULSE|AM,FM|AM,PM,PULSE|AM,PM|AM,PULSE|AM|FM,PULSE|FM|PM,PULSE|PM|FSK2L,PULSE|FSK2L|FSK4L}";
@@ -26,13 +13,4 @@ getModulation {
 
 setModulation {
 	out "MODE %{AM,FM,PULSE|AM,FM|AM,PM,PULSE|AM,PM|AM,PULSE|AM|FM,PULSE|FM|PM,PULSE|PM|FSK2L,PULSE|FSK2L|FSK4L}";
-}
-
-getError {
-	out "error?";
-	in "%/(.{0,39})/";
-}
-
-reset {
-	out "*RST";
 }

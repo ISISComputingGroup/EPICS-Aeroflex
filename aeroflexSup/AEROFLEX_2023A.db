@@ -33,7 +33,7 @@ record(mbbi, "$(P)MODE")
     field(DESC, "Get modulation")
     field(DTYP, "stream")
 
-    field(INP, "@aeroflex.proto getModulation $(PORT)")
+    field(INP, "@aeroflex_$(DEV_TYPE).proto getModulation $(PORT)")
 	
 	field(ZRST, "AM,FM,PULSE")
 	field(ONST, "AM,FM")
@@ -78,7 +78,7 @@ record(mbbo, "$(P)MODE:SP")
     field(DESC, "Set modulation")
     field(SCAN, "Passive")
     field(DTYP, "stream")
-    field(OUT, "@aeroflex.proto setModulation $(PORT)")
+    field(OUT, "@aeroflex_$(DEV_TYPE).proto setModulation $(PORT)")
 	
 	field(ZRST, "AM,FM,PULSE")
 	field(ONST, "AM,FM")
