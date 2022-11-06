@@ -25,6 +25,7 @@ record(ao, "$(P)RF_LEVEL:SP_NO_ACTION")
 {
 	field(PREC, "2")
 	info(autosaveFields, "VAL")
+	field(UDFS, "NO_ALARM")
 }
 
 record(mbbi, "$(P)MODE")
@@ -33,32 +34,19 @@ record(mbbi, "$(P)MODE")
     field(DESC, "Get modulation")
     field(DTYP, "stream")
 
-    field(INP, "@aeroflex.proto getModulation $(PORT)")
+    field(INP, "@aeroflex_$(DEV_TYPE).proto getModulation $(PORT)")
 	
-	field(ZRST, "AM,FM")
-	field(ONST, "AM,PM")
-	field(TWST, "AM")
-	field(THST, "FM,PULSE")
-	field(FRST, "FM")
-	field(FVST, "PM,PULSE")
-	field(SXST, "PM")
+	field(ZRST, "AM1,FM1")
+	field(ONST, "AM1,PM1")
+	field(TWST, "AM1")
+	field(THST, "PULSE,FM1")
+	field(FRST, "FM1")
+	field(FVST, "PULSE,PM1")
+	field(SXST, "PM1")
 	
     info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:MODE")
-}
-
-record(mbbo, "$(P)MODE:SP_NO_ACTION")
-{
-	info(autosaveFields, "VAL")
-	
-	field(ZRST, "AM,FM")
-	field(ONST, "AM,PM")
-	field(TWST, "AM")
-	field(THST, "FM,PULSE")
-	field(FRST, "FM")
-	field(FVST, "PM,PULSE")
-	field(SXST, "PM")
 }
 
 record(mbbo, "$(P)MODE:SP")
@@ -66,14 +54,14 @@ record(mbbo, "$(P)MODE:SP")
     field(DESC, "Set modulation")
     field(SCAN, "Passive")
     field(DTYP, "stream")
-    field(OUT, "@aeroflex.proto setModulation $(PORT)")
+    field(OUT, "@aeroflex_$(DEV_TYPE).proto setModulation $(PORT)")
 	
-	field(ZRST, "AM,FM")
-	field(ONST, "AM,PM")
-	field(TWST, "AM")
-	field(THST, "FM,PULSE")
-	field(FRST, "FM")
-	field(FVST, "PM,PULSE")
+	field(ZRST, "FM,PULSE")
+	field(ONST, "PM,PULSE")
+	field(TWST, "AM,FM")
+	field(THST, "AM,PM")
+	field(FRST, "AM")
+	field(FVST, "FM")
 	field(SXST, "PM")
 }
 
@@ -83,6 +71,6 @@ record(calcout, "$(P)SEND_MODE_PARAMS")
     field(SCAN, "Passive")
 	field(INPA, "$(P)MODE:SP_NO_ACTION")
 	field(INPB, "$(P)PULSE_CHECK:SP")
-	field(CALC, "((B=0)||(A<4))?A:(A-1)")
+	field(CALC, "((B=1)&&(A>2))?(A-3):(A+2)")
 	field(OUT, "$(P)MODE:SP PP")
 }

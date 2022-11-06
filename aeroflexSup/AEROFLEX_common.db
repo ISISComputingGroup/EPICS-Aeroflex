@@ -10,7 +10,7 @@ record(bo, "$(P)SIM")
 record(bo, "$(P)DISABLE") 
 {
     field(DESC, "Disable comms")
-    field(PINI, "YES")
+    field(UDFS, "NO_ALARM")
     field(VAL, "$(DISABLE=0)")
     field(OMSL, "supervisory")
     field(ZNAM, "COMMS ENABLED")
@@ -43,12 +43,13 @@ record(ao, "$(P)CARRIER_FREQ:SP_NO_ACTION")
 {
 	info(autosaveFields, "VAL")
 	field(PREC, "2")
+	field(UDFS, "NO_ALARM")
 }
 
 record(mbbo, "$(P)CARRIER_FREQ_UNITS")
 {
     field(DESC, "Carrier Frequency Units readout")
-	
+	field(UDFS, "NO_ALARM")
 	info(autosaveFields, "VAL")
 
 	field(ZRST, "HZ")
@@ -60,14 +61,13 @@ record(mbbo, "$(P)CARRIER_FREQ_UNITS")
 record(mbbo, "$(P)CARRIER_FREQ_UNITS:SP")
 {
     field(DESC, "Set Carrier Frequency Units")
-	
+	field(UDFS, "NO_ALARM")
 	info(autosaveFields, "VAL")
 	
 	field(ZRST, "HZ")
 	field(ONST, "kHZ")
 	field(TWST, "MHZ")
 	field(THST, "GHZ")
-	field(PINI, "YES")
 }
 
 record(ao, "$(P)CAR_FREQ_CONV")
@@ -112,10 +112,23 @@ record(dfanout, "$(P)SEND_RF_LVL_PARAMS")
     field(OUTA, "$(P)RF_LEVEL:SP PP")
 }
 
+record(mbbo, "$(P)MODE:SP_NO_ACTION")
+{
+	info(autosaveFields, "VAL")
+	field(UDFS, "NO_ALARM")
+	
+	field(ZRST, "AM,FM")
+	field(ONST, "AM,PM")
+	field(TWST, "AM")
+	field(THST, "FM")
+	field(FRST, "PM")
+}
+
 record(bo, "$(P)PULSE_CHECK:SP")
 {
     field(DESC, "Enables pulsed modulation")
     field(SCAN, "Passive")
+	field(UDFS, "NO_ALARM")
 	
 	info(autosaveFields, "VAL")
     

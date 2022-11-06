@@ -25,6 +25,7 @@ record(ao, "$(P)RF_LEVEL:SP_NO_ACTION")
 {
 	field(PREC, "6")
 	info(autosaveFields, "VAL")
+	field(UDFS, "NO_ALARM")
 }
 
 record(mbbi, "$(P)MODE")
@@ -52,25 +53,6 @@ record(mbbi, "$(P)MODE")
     info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:MODE")
-}
-
-record(mbbo, "$(P)MODE:SP_NO_ACTION")
-{
-	info(autosaveFields, "VAL")
-	
-	field(ZRST, "AM,FM,PULSE")
-	field(ONST, "AM,FM")
-	field(TWST, "AM,PM,PULSE")
-	field(THST, "AM,PM")
-	field(FRST, "AM,PULSE")
-	field(FVST, "AM")
-	field(SXST, "FM,PULSE")
-	field(SVST, "FM")
-	field(EIST, "PM,PULSE")
-	field(NIST, "PM")
-	field(TEST, "FSK2L,PULSE")
-	field(ELST, "FSK2L")
-	field(TVST, "FSK4L")
 }
 
 record(mbbo, "$(P)MODE:SP")
@@ -101,6 +83,6 @@ record(calcout, "$(P)SEND_MODE_PARAMS")
     field(SCAN, "Passive")
 	field(INPA, "$(P)MODE:SP_NO_ACTION")
 	field(INPB, "$(P)PULSE_CHECK:SP")
-	field(CALC, "(B = 0) ? A : (A - 1)")
+	field(CALC, "(B = 0) ? ((2 * A) + 1) : (2 * A)")
 	field(OUT, "$(P)MODE:SP PP")
 }
