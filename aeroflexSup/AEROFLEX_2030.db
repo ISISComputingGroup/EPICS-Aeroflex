@@ -8,9 +8,9 @@ record(ai, "$(P)RF_LEVEL")
     field(INP, "@aeroflex_common.proto getRFLevel $(PORT)")
 	
 	field(PREC, "2")
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:RF_LEVEL")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ao, "$(P)RF_LEVEL:SP")
@@ -19,6 +19,9 @@ record(ao, "$(P)RF_LEVEL:SP")
 	field(DTYP, "stream")
 	field(OUT, "@aeroflex_common.proto setRFLevel $(PORT)")
 	field(PREC, "2")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_LEVEL:SP")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ao, "$(P)RF_LEVEL:SP_NO_ACTION")
@@ -44,9 +47,9 @@ record(mbbi, "$(P)MODE")
 	field(FVST, "PULSE,PM1")
 	field(SXST, "PM1")
 	
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:MODE")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(mbbo, "$(P)MODE:SP")
@@ -63,6 +66,9 @@ record(mbbo, "$(P)MODE:SP")
 	field(FRST, "AM")
 	field(FVST, "FM")
 	field(SXST, "PM")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MODE:SP")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(calcout, "$(P)SEND_MODE_PARAMS")
@@ -74,3 +80,22 @@ record(calcout, "$(P)SEND_MODE_PARAMS")
 	field(CALC, "((B=1)&&(A>2))?(A-3):(A+2)")
 	field(OUT, "$(P)MODE:SP PP")
 }
+
+### SIMULATION RECORDS ###
+
+record(mbbi,"$(P)SIM:MODE")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+alias("$(P)SIM:MODE","$(P)SIM:MODE:SP")
+
+record(ai,"$(P)SIM:RF_LEVEL")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+alias("$(P)SIM:RF_LEVEL","$(P)SIM:RF_LEVEL:SP")
+

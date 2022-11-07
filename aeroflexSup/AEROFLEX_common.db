@@ -24,11 +24,11 @@ record(ai, "$(P)CARRIER_FREQ")
     field(DTYP, "stream")
 	field(FLNK, "$(P)CALC_RETURN_CAR_FREQ")
     field(INP, "@aeroflex_$(DEV_TYPE).proto getCarrierFrequency $(PORT)")
-
 	field(PREC, "2")
-    info(INTEREST, "HIGH")
+
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:CARRIER_FREQ")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ao, "$(P)CARRIER_FREQ:SP")
@@ -37,6 +37,10 @@ record(ao, "$(P)CARRIER_FREQ:SP")
     field(DTYP, "stream")
 	field(OUT, "@aeroflex_common.proto setCarFreq($(P)CARRIER_FREQ_UNITS:SP) $(PORT)")
 	field(PREC, "2")
+	
+	field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:CARRIER_FREQ:SP")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ao, "$(P)CARRIER_FREQ:SP_NO_ACTION")
@@ -135,7 +139,6 @@ record(bo, "$(P)PULSE_CHECK:SP")
     field(ZNAM, "Pulse disabled")
     field(ONAM, "Pulse enabled")
     
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:PULSE_CHECK:SP")
 }
@@ -148,7 +151,6 @@ record(stringin, "$(P)ERROR")
 
     field(INP, "@aeroflex_common.proto getError $(PORT)")
 
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:ERROR")
     field(SDIS, "$(P)DISABLE")
@@ -164,39 +166,13 @@ record(ao, "$(P)RESET")
 record(ai,"$(P)SIM:CARRIER_FREQ")
 {
     field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
 }
 
 alias("$(P)SIM:CARRIER_FREQ","$(P)SIM:CARRIER_FREQ:SP")
 
-record(mbbi,"$(P)SIM:CARRIER_FREQ_UNITS")
-{
-    field(SCAN, "Passive")
-}
-
-alias("$(P)SIM:CARRIER_FREQ_UNITS","$(P)SIM:CARRIER_FREQ_UNITS:SP")
-
-record(stringin,"$(P)SIM:CARRIER_FREQ_WITH_UNITS")
-{
-    field(SCAN, "Passive")
-}
-
-alias("$(P)SIM:CARRIER_FREQ_WITH_UNITS","$(P)SIM:CARRIER_FREQ_WITH_UNITS:SP")
-
-record(ai,"$(P)SIM:RF_LEVEL")
-{
-    field(SCAN, "Passive")
-}
-
-alias("$(P)SIM:RF_LEVEL","$(P)SIM:RF_LEVEL:SP")
-
-record(mbbi,"$(P)SIM:MODE")
-{
-    field(SCAN, "Passive")
-}
-
-alias("$(P)SIM:MODE","$(P)SIM:MODE:SP")
-
 record(stringin,"$(P)SIM:ERROR")
 {
     field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
 }

@@ -4,13 +4,12 @@ record(ai, "$(P)RF_LEVEL")
     field(DESC, "RF level")
     field(DTYP, "stream")
 	field(EGU, "DBM")
-
     field(INP, "@aeroflex_common.proto getRFLevel $(PORT)")
-	
 	field(PREC, "6")
-    info(INTEREST, "HIGH")
+
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:RF_LEVEL")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ao, "$(P)RF_LEVEL:SP")
@@ -19,6 +18,9 @@ record(ao, "$(P)RF_LEVEL:SP")
 	field(DTYP, "stream")
 	field(OUT, "@aeroflex_common.proto setRFLevel $(PORT)")
 	field(PREC, "6")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_LEVEL:SP")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ao, "$(P)RF_LEVEL:SP_NO_ACTION")
@@ -50,9 +52,9 @@ record(mbbi, "$(P)MODE")
 	field(ELST, "FSK2L")
 	field(TVST, "FSK4L")
 	
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:MODE")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(mbbo, "$(P)MODE:SP")
@@ -75,6 +77,9 @@ record(mbbo, "$(P)MODE:SP")
 	field(TEST, "FSK2L,PULSE")
 	field(ELST, "FSK2L")
 	field(TVST, "FSK4L")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MODE:SP")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(calcout, "$(P)SEND_MODE_PARAMS")
@@ -86,3 +91,22 @@ record(calcout, "$(P)SEND_MODE_PARAMS")
 	field(CALC, "(B = 0) ? ((2 * A) + 1) : (2 * A)")
 	field(OUT, "$(P)MODE:SP PP")
 }
+
+### SIMULATION RECORDS ###
+
+record(mbbi,"$(P)SIM:MODE")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+alias("$(P)SIM:MODE","$(P)SIM:MODE:SP")
+
+record(ai,"$(P)SIM:RF_LEVEL")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+alias("$(P)SIM:RF_LEVEL","$(P)SIM:RF_LEVEL:SP")
+
