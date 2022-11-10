@@ -156,6 +156,17 @@ record(stringin, "$(P)ERROR")
     field(SDIS, "$(P)DISABLE")
 }
 
+record(stringout, "$(P)DEV_TYPE")
+{
+    field(SCAN, "passive")
+    field(DESC, "Dev type")
+    field(DTYP, "stream")
+	field(UDFS, "NO_ALARM")
+
+    field(VAL, "$(DEV_TYPE)")
+    field(SDIS, "$(P)DISABLE")
+}
+
 record(ao, "$(P)RESET")
 {
     field(DESC, "Reset")
