@@ -1,35 +1,3 @@
-record(ai, "$(P)RF_LEVEL")
-{
-    field(SCAN, "2 second")
-    field(DESC, "RF level")
-    field(DTYP, "stream")
-	field(EGU, "DBM")
-    field(INP, "@aeroflex_common.proto getRFLevel $(PORT)")
-	field(PREC, "6")
-
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:RF_LEVEL")
-    field(SDIS, "$(P)DISABLE")
-}
-
-record(ao, "$(P)RF_LEVEL:SP")
-{
-    field(DESC, "Set RF level")
-	field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto setRFLevel $(PORT)")
-	field(PREC, "6")
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:RF_LEVEL:SP")
-    field(SDIS, "$(P)DISABLE")
-}
-
-record(ao, "$(P)RF_LEVEL:SP_NO_ACTION")
-{
-	field(PREC, "6")
-	info(autosaveFields, "VAL")
-	field(UDFS, "NO_ALARM")
-}
-
 record(mbbi, "$(P)MODE")
 {
     field(SCAN, "2 second")
@@ -101,12 +69,3 @@ record(mbbi,"$(P)SIM:MODE")
 }
 
 alias("$(P)SIM:MODE","$(P)SIM:MODE:SP")
-
-record(ai,"$(P)SIM:RF_LEVEL")
-{
-    field(SCAN, "Passive")
-    field(DTYP, "Soft Channel")
-}
-
-alias("$(P)SIM:RF_LEVEL","$(P)SIM:RF_LEVEL:SP")
-

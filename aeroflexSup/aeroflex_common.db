@@ -50,9 +50,9 @@ record(ao, "$(P)CARRIER_FREQ:SP_NO_ACTION")
 	field(UDFS, "NO_ALARM")
 }
 
-record(mbbo, "$(P)CARRIER_FREQ_UNITS")
+record(mbbi, "$(P)CAR_FREQ_READOUT_UNITS")
 {
-    field(DESC, "Carrier Frequency Units readout")
+    field(DESC, "Set Carrier Frequency readout Units")
 	field(UDFS, "NO_ALARM")
 	info(autosaveFields, "VAL")
 
@@ -62,7 +62,7 @@ record(mbbo, "$(P)CARRIER_FREQ_UNITS")
 	field(THST, "GHZ")
 }
 
-record(mbbo, "$(P)CARRIER_FREQ_UNITS:SP")
+record(mbbi, "$(P)CARRIER_FREQ_UNITS:SP")
 {
     field(DESC, "Set Carrier Frequency Units")
 	field(UDFS, "NO_ALARM")
@@ -78,14 +78,14 @@ record(ao, "$(P)CAR_FREQ_CONV")
 {
     field(DESC, "Carr freq val converted to units")
 	field(EGU, "")
+	field(PREC, "2")
 }
 
 record(calcout, "$(P)CALC_RETURN_CAR_FREQ")
 {
 	field(DESC, "Convert car freq to kHZ,MHZ,GHZ")
-	#field(FLNK, "$(P)CARRIER_FREQ")
 	field(INPA, "$(P)CARRIER_FREQ")
-	field(INPB, "$(P)CARRIER_FREQ_UNITS")
+	field(INPB, "$(P)CAR_FREQ_READOUT_UNITS")
 	field(CALC, "A / 10 ** (3 * B)")
 	field(OUT, "$(P)CAR_FREQ_CONV PP")
 }
@@ -102,9 +102,42 @@ record(calcout, "$(P)SEND_CAR_FREQ_PARAMS")
 record(scalcout, "CAR_FREQ_CONV_UNIT") {
     field(DESC, "Set car freq conv unit")
 	field(SCAN, "1 second")				
-	field(INPA, "$(P)CARRIER_FREQ_UNITS")
+	field(INPA, "$(P)CAR_FREQ_READOUT_UNITS")
     field(CALC, "(A=0)?'HZ':(A=1)?'kHZ':(A=2)?'MHZ':(A=3)?'GHZ':''")
     field(OUT, "$(P)CAR_FREQ_CONV.EGU PP")
+}
+
+record(ai, "$(P)RF_LEVEL")
+{
+    field(SCAN, "2 second")
+    field(DESC, "RF level")
+    field(DTYP, "stream")
+	field(EGU, "DBM")
+    field(INP, "@aeroflex_common.proto getRFLevel $(PORT)")
+	field(PREC, "$(RF_PREC)")
+	info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_LEVEL")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ao, "$(P)RF_LEVEL:SP")
+{
+    field(DESC, "Set RF level")
+	field(DTYP, "stream")
+	field(OUT, "@aeroflex_common.proto setRFLevel $(PORT)")
+	field(PREC, "$(RF_PREC)")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_LEVEL:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ao, "$(P)RF_LEVEL:SP_NO_ACTION")
+{
+	field(PREC, "$(RF_PREC)")
+	info(autosaveFields, "VAL")
+	field(UDFS, "NO_ALARM")
 }
 
 record(dfanout, "$(P)SEND_RF_LVL_PARAMS")
@@ -116,7 +149,7 @@ record(dfanout, "$(P)SEND_RF_LVL_PARAMS")
     field(OUTA, "$(P)RF_LEVEL:SP PP")
 }
 
-record(mbbo, "$(P)MODE:SP_NO_ACTION")
+record(mbbi, "$(P)MODE:SP_NO_ACTION")
 {
 	info(autosaveFields, "VAL")
 	field(UDFS, "NO_ALARM")
@@ -158,7 +191,6 @@ record(stringin, "$(P)ERROR")
 
 record(stringout, "$(P)DEV_TYPE")
 {
-    field(SCAN, "passive")
     field(DESC, "Dev type")
     field(DTYP, "stream")
 	field(UDFS, "NO_ALARM")
@@ -174,6 +206,8 @@ record(ao, "$(P)RESET")
 	field(OUT, "@aeroflex_common.proto reset $(PORT)")
 }
 
+### SIMULATION RECORDS ###
+
 record(ai,"$(P)SIM:CARRIER_FREQ")
 {
     field(SCAN, "Passive")
@@ -181,6 +215,14 @@ record(ai,"$(P)SIM:CARRIER_FREQ")
 }
 
 alias("$(P)SIM:CARRIER_FREQ","$(P)SIM:CARRIER_FREQ:SP")
+
+record(ai,"$(P)SIM:RF_LEVEL")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+alias("$(P)SIM:RF_LEVEL","$(P)SIM:RF_LEVEL:SP")
 
 record(stringin,"$(P)SIM:ERROR")
 {
