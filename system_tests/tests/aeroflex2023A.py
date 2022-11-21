@@ -1,8 +1,16 @@
-import unittest
+import sys, os
 
+from utils.ioc_launcher import EPICS_TOP
+sys.path.append(os.path.join(EPICS_TOP, "support", "aeroflex", "master", "system_tests", "common_tests"))
+
+from aeroflex import AeroflexTests, DEVICE_PREFIX, EMULATOR_NAME
+
+import unittest
+from utils.test_modes import TestModes
 from parameterized import parameterized
 from utils.ioc_launcher import get_default_ioc_dir
-from common_tests.aeroflex import AeroflexTests, DEVICE_PREFIX, EMULATOR_NAME, TEST_MODES
+
+TEST_MODES = [TestModes.DEVSIM]
 
 IOCS = [
     {

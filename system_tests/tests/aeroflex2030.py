@@ -1,8 +1,16 @@
-import unittest
+import sys, os
 
+from utils.ioc_launcher import EPICS_TOP
+sys.path.append(os.path.join(EPICS_TOP, "support", "aeroflex", "master", "system_tests", "common_tests"))
+
+from aeroflex import AeroflexTests, DEVICE_PREFIX, EMULATOR_NAME
+
+import unittest
+from utils.test_modes import TestModes
 from parameterized import parameterized
 from utils.ioc_launcher import get_default_ioc_dir
-from common_tests.aeroflex import AeroflexTests, DEVICE_PREFIX, EMULATOR_NAME, TEST_MODES
+
+TEST_MODES = [TestModes.DEVSIM]
 
 IOCS = [
     {
@@ -30,7 +38,6 @@ class Aeroflex2030Tests(AeroflexTests, unittest.TestCase):
         
         self.ca.assert_that_pv_is('MODE', value + '1')
 
-        
     @parameterized.expand([('Value 1', 'FM'), ('Value 2', 'PM')])
     def test_GIVEN_new_modulation_WHEN_set_modulation_with_pulse_THEN_new_modulation_set(self, _, value):
         self.ca.set_pv_value('MODE:SP_NO_ACTION', value)

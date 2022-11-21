@@ -50,7 +50,7 @@ record(ao, "$(P)CARRIER_FREQ:SP_NO_ACTION")
 	field(UDFS, "NO_ALARM")
 }
 
-record(mbbi, "$(P)CAR_FREQ_READOUT_UNITS")
+record(mbbo, "$(P)CAR_FREQ_READOUT_UNITS")
 {
     field(DESC, "Set Carrier Frequency readout Units")
 	field(UDFS, "NO_ALARM")
@@ -62,7 +62,7 @@ record(mbbi, "$(P)CAR_FREQ_READOUT_UNITS")
 	field(THST, "GHZ")
 }
 
-record(mbbi, "$(P)CARRIER_FREQ_UNITS:SP")
+record(mbbo, "$(P)CARRIER_FREQ_UNITS:SP")
 {
     field(DESC, "Set Carrier Frequency Units")
 	field(UDFS, "NO_ALARM")
@@ -149,7 +149,7 @@ record(dfanout, "$(P)SEND_RF_LVL_PARAMS")
     field(OUTA, "$(P)RF_LEVEL:SP PP")
 }
 
-record(mbbi, "$(P)MODE:SP_NO_ACTION")
+record(mbbo, "$(P)MODE:SP_NO_ACTION")
 {
 	info(autosaveFields, "VAL")
 	field(UDFS, "NO_ALARM")
@@ -189,7 +189,7 @@ record(stringin, "$(P)ERROR")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(stringout, "$(P)DEV_TYPE")
+record(stringin, "$(P)DEV_TYPE")
 {
     field(DESC, "Dev type")
     field(DTYP, "stream")
