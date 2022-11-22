@@ -54,14 +54,14 @@ class Aeroflex2030Tests(AeroflexTests, unittest.TestCase):
     
     @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_modulation_WHEN_set_modulation_with_pulse_incorrectly_THEN_pulse_ignored(self):
-        self.ca.set_pv_value('MODE:SP_NO_ACTION', 'AM,FM')
-        self.ca.assert_that_pv_is('MODE:SP_NO_ACTION', 'AM,FM')
+        self.ca.set_pv_value('MODE:SP_NO_ACTION', 'FM,AM')
+        self.ca.assert_that_pv_is('MODE:SP_NO_ACTION', 'FM,AM')
         
         self.ca.set_pv_value('PULSE_CHECK:SP', 1)
         self.ca.assert_that_pv_is('PULSE_CHECK:SP', 'Pulse enabled')
         
         self.ca.set_pv_value('SEND_MODE_PARAMS.PROC', 1)
-        self.ca.assert_that_pv_is('MODE', 'AM1,FM1')
+        self.ca.assert_that_pv_is('MODE', 'FM1,AM1')
         
     def test_GIVEN_old_modulation_WHEN_new_modulation_set_THEN_new_modulation_is_delayed(self):
         self.ca.set_pv_value('MODE', 'AM1')

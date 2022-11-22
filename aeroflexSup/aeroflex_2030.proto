@@ -8,10 +8,10 @@ getCarrierFrequency {
 
 getModulation {
 	out "mode?";
-	in ":MODE %{AM1,FM1|AM1,PM1|AM1|PULSE,FM1|FM1|PULSE,PM1|PM1}";
+	in ":MODE %{FM1,AM1|PM1,AM1|AM1|PULSE,FM1|FM1|PULSE,PM1|PM1}";
 }
 
 setModulation {
-	out "MODE %{FM,PULSE|PM,PULSE|AM,FM|AM,PM|AM|FM|PM}";
+	out "MODE %{FM,PULSE|PM,PULSE|FM,AM|PM,AM|AM|FM|PM}";
 	wait 1500;
 }

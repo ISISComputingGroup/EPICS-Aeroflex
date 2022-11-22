@@ -30,7 +30,7 @@ class Aeroflex2023ATests(AeroflexTests, unittest.TestCase):
     def setUp(self):
         super(Aeroflex2023ATests, self).setUp()                         
 
-    @parameterized.expand([('Value 1', 'AM'), ('Value 2', 'AM,PM'), ('Value 3', 'AM,FM')])
+    @parameterized.expand([('Value 1', 'AM'), ('Value 2', 'PM,AM'), ('Value 3', 'FM,AM')])
     @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_modulation_WHEN_set_modulation_THEN_new_modulation_set(self, _, value):
         self.ca.set_pv_value('MODE:SP_NO_ACTION', value)
