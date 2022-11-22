@@ -1,16 +1,15 @@
 import sys, os
-
-from utils.ioc_launcher import EPICS_TOP
-sys.path.append(os.path.join(EPICS_TOP, "support", "aeroflex", "master", "system_tests", "common_tests"))
-
-from aeroflex import AeroflexTests, DEVICE_PREFIX, EMULATOR_NAME
-
 import unittest
+
 from utils.test_modes import TestModes
 from parameterized import parameterized
-from utils.ioc_launcher import get_default_ioc_dir
+from utils.ioc_launcher import get_default_ioc_dir, EPICS_TOP
+from utils.testing import skip_if_recsim
+sys.path.append(os.path.join(EPICS_TOP, "support", "aeroflex", "master", "system_tests", "common_tests"))
+from aeroflex import AeroflexTests, DEVICE_PREFIX, EMULATOR_NAME
 
-TEST_MODES = [TestModes.DEVSIM]
+
+TEST_MODES = [TestModes.DEVSIM, TestModes.RECSIM]
 
 IOCS = [
     {
@@ -22,6 +21,7 @@ IOCS = [
     },
 ]
 
+
 class Aeroflex2030Tests(AeroflexTests, unittest.TestCase):
     '''
     Tests for aeroflex model 2030. Tests inherited from AeroflexTests.
@@ -31,6 +31,7 @@ class Aeroflex2030Tests(AeroflexTests, unittest.TestCase):
         super(Aeroflex2030Tests, self).setUp()
         
     @parameterized.expand([('Value 1', 'AM'), ('Value 2', 'PM'), ('Value 3', 'FM')])
+    @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_modulation_WHEN_set_modulation_THEN_new_modulation_set(self, _, value):
         self.ca.set_pv_value('MODE:SP_NO_ACTION', value)
         self.ca.assert_that_pv_is('MODE:SP_NO_ACTION', value)
@@ -39,6 +40,7 @@ class Aeroflex2030Tests(AeroflexTests, unittest.TestCase):
         self.ca.assert_that_pv_is('MODE', value + '1')
 
     @parameterized.expand([('Value 1', 'FM'), ('Value 2', 'PM')])
+    @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_modulation_WHEN_set_modulation_with_pulse_THEN_new_modulation_set(self, _, value):
         self.ca.set_pv_value('MODE:SP_NO_ACTION', value)
         self.ca.assert_that_pv_is('MODE:SP_NO_ACTION', value)
@@ -49,7 +51,8 @@ class Aeroflex2030Tests(AeroflexTests, unittest.TestCase):
         self.ca.set_pv_value('SEND_MODE_PARAMS.PROC', 1)
         
         self.ca.assert_that_pv_is('MODE', 'PULSE,' + value + '1')
-        
+    
+    @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_modulation_WHEN_set_modulation_with_pulse_incorrectly_THEN_pulse_ignored(self):
         self.ca.set_pv_value('MODE:SP_NO_ACTION', 'AM,FM')
         self.ca.assert_that_pv_is('MODE:SP_NO_ACTION', 'AM,FM')
@@ -72,7 +75,8 @@ class Aeroflex2030Tests(AeroflexTests, unittest.TestCase):
         self.ca.assert_that_pv_is('MODE', 'AM1')
         
         self.ca.assert_that_pv_is('MODE', 'PM1', 2)
-        
+    
+    @skip_if_recsim("Requires emulator.")
     def test_GIVEN_reset_THEN_values_are_reset(self):
         self.ca.set_pv_value('RESET', 1)
         self.ca.assert_that_pv_is('RESET', 1)

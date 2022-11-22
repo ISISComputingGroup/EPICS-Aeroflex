@@ -1,17 +1,14 @@
-import unittest
-
 from parameterized import parameterized
 from utils.channel_access import ChannelAccess
-from utils.test_modes import TestModes
-from utils.testing import get_running_lewis_and_ioc
+from utils.testing import get_running_lewis_and_ioc, skip_if_recsim
 from genie_python import channel_access_exceptions
+
 
 # Device prefix
 DEVICE_PREFIX = "AEROFLEX_01"
 EMULATOR_NAME = "aeroflex"
 
-TEST_MODES = [TestModes.DEVSIM]
-        
+ 
 class AeroflexTests(object):
     """
     Tests for the Aeroflex
@@ -20,7 +17,8 @@ class AeroflexTests(object):
     def setUp(self):
         self._lewis, self._ioc = get_running_lewis_and_ioc(EMULATOR_NAME, DEVICE_PREFIX)
         self.ca = ChannelAccess(device_prefix=DEVICE_PREFIX, default_wait_time=0.0)
-        
+    
+    @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_carrier_freq_WHEN_set_carrier_freq_THEN_new_carrier_freq_set(self):        
 
         self.ca.set_pv_value('CARRIER_FREQ:SP_NO_ACTION', 1.2)
@@ -55,7 +53,8 @@ class AeroflexTests(object):
             
     def test_WHEN_set_modulation_incorrectly_THEN_error_thrown(self):
         self.assertRaises(channel_access_exceptions.InvalidEnumStringException, self.ca.set_pv_value, 'MODE:SP_NO_ACTION', 'wrong')
-        
+    
+    @skip_if_recsim("Requires emulator for backdoor access.")
     def test_GIVEN_error_set_THEN_error_returned(self):
         self._lewis.backdoor_set_on_device('error', 'I AM ERROR')
         
