@@ -187,6 +187,10 @@ record(stringin, "$(P)ERROR")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:ERROR")
     field(SDIS, "$(P)DISABLE")
+
+    info(alarm, "AEROFLEX")
+    info(interest, "HIGH")
+    info(archive, "VAL")
 }
 
 record(stringin, "$(P)DEV_TYPE")
