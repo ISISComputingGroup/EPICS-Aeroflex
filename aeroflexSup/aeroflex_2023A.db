@@ -1,0 +1,71 @@
+record(mbbi, "$(P)MODE")
+{
+    field(SCAN, "2 second")
+    field(DESC, "Get modulation")
+    field(DTYP, "stream")
+
+    field(INP, "@aeroflex_$(DEV_TYPE).proto getModulation $(PORT)")
+	
+	field(ZRST, "FM,AM,PULSE")
+	field(ONST, "FM,AM")
+	field(TWST, "PM,AM,PULSE")
+	field(THST, "PM,AM")
+	field(FRST, "AM,PULSE")
+	field(FVST, "AM")
+	field(SXST, "FM,PULSE")
+	field(SVST, "FM")
+	field(EIST, "PM,PULSE")
+	field(NIST, "PM")
+	field(TEST, "FSK2L,PULSE")
+	field(ELST, "FSK2L")
+	field(TVST, "FSK4L")
+	
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MODE")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(mbbo, "$(P)MODE:SP")
+{
+    field(DESC, "Set modulation")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(OUT, "@aeroflex_$(DEV_TYPE).proto setModulation $(PORT)")
+	
+	field(ZRST, "FM,AM,PULSE")
+	field(ONST, "FM,AM")
+	field(TWST, "PM,AM,PULSE")
+	field(THST, "PM,AM")
+	field(FRST, "AM,PULSE")
+	field(FVST, "AM")
+	field(SXST, "FM,PULSE")
+	field(SVST, "FM")
+	field(EIST, "PM,PULSE")
+	field(NIST, "PM")
+	field(TEST, "FSK2L,PULSE")
+	field(ELST, "FSK2L")
+	field(TVST, "FSK4L")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MODE:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(calcout, "$(P)SEND_MODE_PARAMS")
+{
+    field(DESC, "Set modulation button")
+    field(SCAN, "Passive")
+	field(INPA, "$(P)MODE:SP_NO_ACTION")
+	field(INPB, "$(P)PULSE_CHECK:SP")
+	field(CALC, "(B = 0) ? ((2 * A) + 1) : (2 * A)")
+	field(OUT, "$(P)MODE:SP PP")
+}
+
+### SIMULATION RECORDS ###
+
+record(mbbi,"$(P)SIM:MODE")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+alias("$(P)SIM:MODE","$(P)SIM:MODE:SP")

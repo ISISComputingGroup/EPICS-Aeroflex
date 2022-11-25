@@ -1,0 +1,17 @@
+InTerminator = '\n';
+OutTerminator = '\n';
+
+getCarrierFrequency {
+	out "cfrq?";
+	in ":CFRQ:VALUE %f;INC %*f";
+}
+
+getModulation {
+	out "mode?";
+	in ":MODE %{FM1,AM1|PM1,AM1|AM1|PULSE,FM1|FM1|PULSE,PM1|PM1}";
+}
+
+setModulation {
+	out "MODE %{FM,PULSE|PM,PULSE|FM,AM|PM,AM|AM|FM|PM}";
+	wait 1500;
+}
