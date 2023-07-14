@@ -107,6 +107,25 @@ record(scalcout, "CAR_FREQ_CONV_UNIT") {
     field(OUT, "$(P)CAR_FREQ_CONV.EGU PP")
 }
 
+record(ao, "$(P)RF_LEVEL:STATUS:ON:SP") {
+    field(DESC, "Set RF level status ON")
+	field(DTYP, "stream")
+	field(OUT, "@aeroflex_common.proto setRFON $(PORT)")
+}
+
+record(ao, "$(P)RF_LEVEL:STATUS:OFF:SP") {
+    field(DESC, "Set RF level status OFF")
+	field(DTYP, "stream")
+	field(OUT, "@aeroflex_common.proto setRFOFF $(PORT)")
+}
+
+record(stringin, "$(P)RF_STATUS") {
+    field(SCAN, "2 second")
+    field(DESC, "RF status")
+    field(DTYP, "stream")
+    field(INP, "@aeroflex_common.proto getRFStatus $(PORT)")
+}
+
 record(ai, "$(P)RF_LEVEL")
 {
     field(SCAN, "2 second")
