@@ -19,12 +19,9 @@ setRFLevel {
 	out "RFLV:VALUE %f";
 }
 
-setRFON {
-	out "RFLV:ON";
-}
-
-setRFOFF {
-	out "RFLV:OFF";
+setRFOutput {
+	out "RFLV:%{OFF|ON}";
+	@init{getRFStatus;}
 }
 
 getError {
