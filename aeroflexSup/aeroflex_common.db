@@ -17,26 +17,36 @@ record(bo, "$(P)DISABLE")
     field(ONAM, "COMMS DISABLED")
 }
 
-record(ai, "$(P)CARRIER_FREQ")
+record(ai, "$(P)_CARRIER_FREQ_RAW")
 {
     field(SCAN, "2 second")
-    field(DESC, "Get carrier frequency")
+    field(DESC, "Get unscaled carrier frequency")
     field(DTYP, "stream")
-	field(FLNK, "$(P)CALC_RETURN_CAR_FREQ")
+	field(FLNK, "$(P)CARRIER_FREQ:RBV")
     field(INP, "@aeroflex_$(DEV_TYPE).proto getCarrierFrequency $(PORT)")
-	field(PREC, "2")
+    field(EGU, "Hz")
 
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:CARRIER_FREQ")
     field(SDIS, "$(P)DISABLE")
 }
 
+record(calc, "$(P)CARRIER_FREQ:RBV")
+{
+	field(DESC, "Scaled carrier frequency")
+	field(INPA, "$(P)_CARRIER_FREQ_RAW")
+    field(PREC, 2)
+    field(EGU, "MHz")
+	field(CALC, "A * (10**-6)")
+}
+
 record(ao, "$(P)CARRIER_FREQ:SP")
 {
     field(DESC, "Carrier frequency")
     field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto setCarFreq($(P)CARRIER_FREQ_UNITS:SP) $(PORT)")
+	field(OUT, "@aeroflex_common.proto setCarFreq $(PORT)")
 	field(PREC, "2")
+    field(EGU, "MHz") 
 	
 	field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:CARRIER_FREQ:SP")
@@ -50,46 +60,6 @@ record(ao, "$(P)CARRIER_FREQ:SP_NO_ACTION")
 	field(UDFS, "NO_ALARM")
 }
 
-record(mbbo, "$(P)CAR_FREQ_READOUT_UNITS")
-{
-    field(DESC, "Set Carrier Frequency readout Units")
-	field(UDFS, "NO_ALARM")
-	info(autosaveFields, "VAL")
-
-	field(ZRST, "HZ")
-	field(ONST, "kHZ")
-	field(TWST, "MHZ")
-	field(THST, "GHZ")
-}
-
-record(mbbo, "$(P)CARRIER_FREQ_UNITS:SP")
-{
-    field(DESC, "Set Carrier Frequency Units")
-	field(UDFS, "NO_ALARM")
-	info(autosaveFields, "VAL")
-	
-	field(ZRST, "HZ")
-	field(ONST, "kHZ")
-	field(TWST, "MHZ")
-	field(THST, "GHZ")
-}
-
-record(ao, "$(P)CAR_FREQ_CONV")
-{
-    field(DESC, "Carr freq val converted to units")
-	field(EGU, "")
-	field(PREC, "2")
-}
-
-record(calcout, "$(P)CALC_RETURN_CAR_FREQ")
-{
-	field(DESC, "Convert car freq to kHZ,MHZ,GHZ")
-	field(INPA, "$(P)CARRIER_FREQ")
-	field(INPB, "$(P)CAR_FREQ_READOUT_UNITS")
-	field(CALC, "A / 10 ** (3 * B)")
-	field(OUT, "$(P)CAR_FREQ_CONV PP")
-}
-
 record(calcout, "$(P)SEND_CAR_FREQ_PARAMS")
 {
     field(DESC, "Set carrier frequency button")
@@ -97,14 +67,6 @@ record(calcout, "$(P)SEND_CAR_FREQ_PARAMS")
 	field(INPA, "$(P)CARRIER_FREQ:SP_NO_ACTION")
 	field(CALC, "A")
 	field(OUT, "$(P)CARRIER_FREQ:SP PP")
-}
-
-record(scalcout, "CAR_FREQ_CONV_UNIT") {
-    field(DESC, "Set car freq conv unit")
-	field(SCAN, "1 second")				
-	field(INPA, "$(P)CAR_FREQ_READOUT_UNITS")
-    field(CALC, "(A=0)?'HZ':(A=1)?'kHZ':(A=2)?'MHZ':(A=3)?'GHZ':''")
-    field(OUT, "$(P)CAR_FREQ_CONV.EGU PP")
 }
 
 record(ai, "$(P)RF_LEVEL")
