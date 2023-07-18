@@ -20,7 +20,7 @@ setRFLevel {
 }
 
 setRFOutput {
-	out "RFLV:%{OFF|ON}";
+	out "RFLV:%s";
 	@init{getRFStatus;}
 }
 
