@@ -63,13 +63,13 @@ class AeroflexTests(object):
     @skip_if_recsim("Requires emulator for backdoor access.")
     def test_WHEN_rf_set_on_THEN_status_is_on(self):
         self._lewis.backdoor_set_on_device("rf_lvl_status", "OFF")
-        self.ca.set_pv_value("RF_LEVEL:STATUS:ON:SP.PROC", 1)
+        self.ca.set_pv_value("RF_LEVEL:STATUS:SP", 1)
 
         self.ca.assert_that_pv_is("RF_STATUS", "ON")
 
     @skip_if_recsim("Requires emulator for backdoor access.")
     def test_WHEN_rf_set_on_THEN_status_is_off(self):
         self._lewis.backdoor_set_on_device("rf_lvl_status", "ON")
-        self.ca.set_pv_value("RF_LEVEL:STATUS:OFF:SP.PROC", 1)
+        self.ca.set_pv_value("RF_LEVEL:STATUS:SP", 0)
 
         self.ca.assert_that_pv_is("RF_STATUS", "OFF")
