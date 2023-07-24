@@ -10,8 +10,18 @@ getRFLevel {
 	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %f;INC %*f;%*s ";
 }
 
+getRFStatus {
+	out "rflv?";
+	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %*f;INC %*f;%s ";
+}
+
 setRFLevel {
 	out "RFLV:VALUE %f";
+}
+
+setRFOutput {
+	out "RFLV:%s";
+	@init{getRFStatus;}
 }
 
 getError {

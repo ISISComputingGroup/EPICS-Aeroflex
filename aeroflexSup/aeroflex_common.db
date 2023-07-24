@@ -53,20 +53,21 @@ record(ao, "$(P)CARRIER_FREQ:SP")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(ao, "$(P)CARRIER_FREQ:SP_NO_ACTION")
-{
-	info(autosaveFields, "VAL")
-	field(PREC, "2")
-	field(UDFS, "NO_ALARM")
+record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
+    field(DESC, "Set RF level status ON/OFF")
+	field(DTYP, "stream")
+    field(ZRVL, 0)
+    field(ONVL, 1)
+    field(ZRST, "OFF")
+    field(ONST, "ON")
+    field(OUT, "@aeroflex_common.proto setRFOutput $(PORT)")
 }
 
-record(calcout, "$(P)SEND_CAR_FREQ_PARAMS")
-{
-    field(DESC, "Set carrier frequency button")
-    field(SCAN, "Passive")
-	field(INPA, "$(P)CARRIER_FREQ:SP_NO_ACTION")
-	field(CALC, "A")
-	field(OUT, "$(P)CARRIER_FREQ:SP PP")
+record(stringin, "$(P)RF_STATUS") {
+    field(SCAN, "2 second")
+    field(DESC, "RF status")
+    field(DTYP, "stream")
+    field(INP, "@aeroflex_common.proto getRFStatus $(PORT)")
 }
 
 record(ai, "$(P)RF_LEVEL")
@@ -95,7 +96,8 @@ record(ao, "$(P)RF_LEVEL:SP")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(mbbo, "$(P)MODE:SP_NO_ACTION")
+record(mbbo, "$(P)MODE:SP_NO_ACTION") # modulation PV that used to control a drop-down, that no longer exists in the OPI
+
 {
 	info(autosaveFields, "VAL")
 	field(UDFS, "NO_ALARM")
@@ -107,7 +109,7 @@ record(mbbo, "$(P)MODE:SP_NO_ACTION")
 	field(FRST, "PM")
 }
 
-record(bo, "$(P)PULSE_CHECK:SP")
+record(bo, "$(P)PULSE_CHECK:SP") # pulse check button that is currently removed from OPI
 {
     field(DESC, "Enables pulsed modulation")
     field(SCAN, "Passive")

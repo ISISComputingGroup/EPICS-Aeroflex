@@ -30,6 +30,9 @@ class CommonStreamInterface(object):
             CmdBuilder('set_carrier_freq').escape('CFRQ:VALUE ').any().eos().build(),
             CmdBuilder('set_rf_level').escape('RFLV:VALUE ').float().eos().build(),
             CmdBuilder('set_modulation').escape('MODE ').string().eos().build(), 
+
+            CmdBuilder('set_rf_on').escape('RFLV:ON').eos().build(),
+            CmdBuilder('set_rf_off').escape('RFLV:OFF').eos().build(),
     ]
         
     def handle_error(self, request, error):
@@ -67,4 +70,14 @@ class CommonStreamInterface(object):
     def set_rf_level(self, new_rf_lvl_val):
         self._device.rf_lvl_val = new_rf_lvl_val
         
+        return ''
+
+    def set_rf_on(self):
+        self._device.rf_lvl_status = 'ON'
+
+        return ''
+
+    def set_rf_off(self):
+        self._device.rf_lvl_status = 'OFF'
+
         return ''
