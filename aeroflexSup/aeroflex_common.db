@@ -97,6 +97,7 @@ record(ao, "$(P)RF_LEVEL:SP")
 }
 
 record(mbbo, "$(P)MODE:SP_NO_ACTION") # modulation PV that used to control a drop-down, that no longer exists in the OPI
+
 {
 	info(autosaveFields, "VAL")
 	field(UDFS, "NO_ALARM")

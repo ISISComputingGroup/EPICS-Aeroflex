@@ -2,7 +2,7 @@ InTerminator = '\n';
 OutTerminator = '\n';
 
 setCarFreq {
-	out "CFRQ:VALUE %f%(\$1)s";
+	out "CFRQ:VALUE %fMHZ";
 }
 
 getRFLevel {
