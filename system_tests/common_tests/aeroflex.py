@@ -22,7 +22,7 @@ class AeroflexTests(object):
     def test_GIVEN_new_carrier_freq_WHEN_set_carrier_freq_THEN_new_carrier_freq_set(self):        
         self.ca.set_pv_value('CARRIER_FREQ:SP', 1100)
         
-        self.ca.assert_that_pv_is('CARRIER_FREQ', 1100)
+        self.ca.assert_that_pv_is('CARRIER_FREQ:RBV', 1100)
 
     @parameterized.expand([('Value 1', 1), ('Value 2', 2), ('Value 3', 3.33333)])
     def test_GIVEN_new_rf_lvl_WHEN_set_rf_lvl_THEN_new_rf_lvl_set(self, _, value):

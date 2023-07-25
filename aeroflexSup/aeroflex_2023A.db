@@ -50,7 +50,7 @@ record(mbbo, "$(P)MODE:SP")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(calcout, "$(P)SEND_MODE_PARAMS")
+record(calcout, "$(P)SEND_MODE_PARAMS") # Currently deprecated, as OPI no longer has set button
 {
     field(DESC, "Set modulation button")
     field(SCAN, "Passive")
