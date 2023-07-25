@@ -33,22 +33,22 @@ class Aeroflex2023ATests(AeroflexTests, unittest.TestCase):
     @parameterized.expand([('Value 1', 'AM'), ('Value 2', 'PM,AM'), ('Value 3', 'FM,AM')])
     @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_modulation_WHEN_set_modulation_THEN_new_modulation_set(self, _, value):
-        self.ca.set_pv_value('MODE:SP_NO_ACTION', value)
-        self.ca.assert_that_pv_is('MODE:SP_NO_ACTION', value)
-        self.ca.set_pv_value('SEND_MODE_PARAMS.PROC', 1)
+        self.ca.set_pv_value('MODE:SP', value)
+        self.ca.assert_that_pv_is('MODE:SP', value)
+        #self.ca.set_pv_value('SEND_MODE_PARAMS.PROC', 1)
         
         self.ca.assert_that_pv_is('MODE', value)
         
     @parameterized.expand([('Value 1', 'FM'), ('Value 2', 'PM'), ('Value 2', 'AM')])
     @skip_if_recsim("Requires emulator.")
     def test_GIVEN_new_modulation_WHEN_set_modulation_with_pulse_THEN_new_modulation_set(self, _, value):
-        self.ca.set_pv_value('MODE:SP_NO_ACTION', value)
-        self.ca.assert_that_pv_is('MODE:SP_NO_ACTION', value)
+        self.ca.set_pv_value('MODE:SP', value)
+        self.ca.assert_that_pv_is('MODE:SP', value)
         
         self.ca.set_pv_value('PULSE_CHECK:SP', 1)
         self.ca.assert_that_pv_is('PULSE_CHECK:SP', 'Pulse enabled')
         
-        self.ca.set_pv_value('SEND_MODE_PARAMS.PROC', 1)
+        #self.ca.set_pv_value('SEND_MODE_PARAMS.PROC', 1)
         
         self.ca.assert_that_pv_is('MODE', value + ',PULSE')
     
