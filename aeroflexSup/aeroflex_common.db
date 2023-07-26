@@ -96,34 +96,6 @@ record(ao, "$(P)RF_LEVEL:SP")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(mbbo, "$(P)MODE:SP_NO_ACTION") # modulation PV that used to control a drop-down, that no longer exists in the OPI
-
-{
-	info(autosaveFields, "VAL")
-	field(UDFS, "NO_ALARM")
-	
-	field(ZRST, "FM,AM")
-	field(ONST, "PM,AM")
-	field(TWST, "AM")
-	field(THST, "FM")
-	field(FRST, "PM")
-}
-
-record(bo, "$(P)PULSE_CHECK:SP") # pulse check button that is currently removed from OPI
-{
-    field(DESC, "Enables pulsed modulation")
-    field(SCAN, "Passive")
-	field(UDFS, "NO_ALARM")
-	
-	info(autosaveFields, "VAL")
-    
-    field(ZNAM, "Pulse disabled")
-    field(ONAM, "Pulse enabled")
-    
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:PULSE_CHECK:SP")
-}
-
 record(stringin, "$(P)ERROR")
 {
     field(SCAN, "2 second")
