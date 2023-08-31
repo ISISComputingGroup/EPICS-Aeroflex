@@ -23,7 +23,7 @@ record(ai, "$(P)_CARRIER_FREQ_RAW")
     field(DESC, "Get unscaled carrier frequency")
     field(DTYP, "stream")
 	field(FLNK, "$(P)CARRIER_FREQ:RBV")
-    field(INP, "@aeroflex_$(DEV_TYPE).proto getCarrierFrequency $(PORT)")
+    field(INP, "@aeroflex_$(DEV_TYPE).proto getCarrierFrequency $(PORT) $(ADDR=0)")
     field(EGU, "Hz")
 
     field(SIML, "$(P)SIM")
@@ -44,7 +44,7 @@ record(ao, "$(P)CARRIER_FREQ:SP")
 {
     field(DESC, "Carrier frequency")
     field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto setCarFreq $(PORT)")
+	field(OUT, "@aeroflex_common.proto setCarFreq $(PORT) $(ADDR=0)")
 	field(PREC, "2")
     field(EGU, "MHz") 
 	
@@ -60,14 +60,14 @@ record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
     field(ONVL, 1)
     field(ZRST, "OFF")
     field(ONST, "ON")
-    field(OUT, "@aeroflex_common.proto setRFOutput $(PORT)")
+    field(OUT, "@aeroflex_common.proto setRFOutput $(PORT) $(ADDR=0)")
 }
 
 record(stringin, "$(P)RF_STATUS") {
     field(SCAN, "2 second")
     field(DESC, "RF status")
     field(DTYP, "stream")
-    field(INP, "@aeroflex_common.proto getRFStatus $(PORT)")
+    field(INP, "@aeroflex_common.proto getRFStatus $(PORT) $(ADDR=0)")
 }
 
 record(ai, "$(P)RF_LEVEL")
@@ -76,7 +76,7 @@ record(ai, "$(P)RF_LEVEL")
     field(DESC, "RF level")
     field(DTYP, "stream")
     field(EGU, "dBm")
-    field(INP, "@aeroflex_common.proto getRFLevel $(PORT)")
+    field(INP, "@aeroflex_common.proto getRFLevel $(PORT) $(ADDR=0)")
 	field(PREC, "$(RF_PREC)")
 	info(archive, "VAL")
 
@@ -89,7 +89,7 @@ record(ao, "$(P)RF_LEVEL:SP")
 {
     field(DESC, "Set RF level")
 	field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto setRFLevel $(PORT)")
+	field(OUT, "@aeroflex_common.proto setRFLevel $(PORT) $(ADDR=0)")
 	field(PREC, "$(RF_PREC)")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:RF_LEVEL:SP")
@@ -102,7 +102,7 @@ record(stringin, "$(P)ERROR")
     field(DESC, "Error")
     field(DTYP, "stream")
 
-    field(INP, "@aeroflex_common.proto getError $(PORT)")
+    field(INP, "@aeroflex_common.proto getError $(PORT) $(ADDR=0)")
 
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:ERROR")
@@ -116,7 +116,6 @@ record(stringin, "$(P)ERROR")
 record(stringin, "$(P)DEV_TYPE")
 {
     field(DESC, "Dev type")
-    field(DTYP, "stream")
 	field(UDFS, "NO_ALARM")
 
     field(VAL, "$(DEV_TYPE)")
@@ -127,7 +126,7 @@ record(ao, "$(P)RESET")
 {
     field(DESC, "Reset")
 	field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto reset $(PORT)")
+	field(OUT, "@aeroflex_common.proto reset $(PORT) $(ADDR=0)")
 }
 
 ### SIMULATION RECORDS ###
