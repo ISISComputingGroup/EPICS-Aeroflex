@@ -51,6 +51,7 @@ record(ao, "$(P)CARRIER_FREQ:SP")
 	field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:CARRIER_FREQ:SP")
     field(SDIS, "$(P)DISABLE")
+	field(FLNK, "$(P)_CARRIER_FREQ_RAW.PROC")
 }
 
 record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
@@ -61,6 +62,7 @@ record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
     field(ZRST, "OFF")
     field(ONST, "ON")
     field(OUT, "@aeroflex_common.proto setRFOutput $(PORT) $(ADDR=0)")
+	field(FLNK, "$(P)RF_STATUS.PROC")
 }
 
 record(stringin, "$(P)RF_STATUS") {
@@ -94,6 +96,7 @@ record(ao, "$(P)RF_LEVEL:SP")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:RF_LEVEL:SP")
     field(SDIS, "$(P)DISABLE")
+	field(FLNK, "$(P)RF_LEVEL.PROC")
 }
 
 record(stringin, "$(P)ERROR")

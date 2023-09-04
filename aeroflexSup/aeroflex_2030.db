@@ -36,6 +36,7 @@ record(mbbo, "$(P)MODE:SP")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:MODE:SP")
     field(SDIS, "$(P)DISABLE")
+	field(FLNK, "$(P)MODE.PROC")
 }
 
 ### SIMULATION RECORDS ###
