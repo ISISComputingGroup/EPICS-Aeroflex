@@ -132,6 +132,87 @@ record(ao, "$(P)RESET")
 	field(OUT, "@aeroflex_common.proto reset $(PORT) $(ADDR=0)")
 }
 
+record(bo, "$(P)MOD:ENABLE")
+{
+    field(DESC, "Modulation enable")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+
+    field(OUT, "@aeroflex_common.proto setModulationControl $(PORT) $(ADDR=0)")
+	field(FLNK, "$(P)_MODE")
+}
+
+record(stringin, "$(P)_MODE")
+{
+    field(SCAN, "2 second")
+    field(DESC, "Get modulation")
+    field(DTYP, "stream")
+
+    field(INP, "@aeroflex_common.proto getModulation $(PORT) $(ADDR=0)")
+		
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MODE")
+    field(SDIS, "$(P)DISABLE")
+	field(FLNK, "$(P)MOD:STAT")
+}
+
+# global modulation on/off
+record(bi, "$(P)MOD:STAT")
+{
+    field(DESC, "Modulation enabled")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    field(SIML, "$(P)SIM")
+    field(SDIS, "$(P)DISABLE")
+    field(SIOL, "$(P)SIM:MOD:STAT")
+
+    field(INP, "@aeroflex_common.proto getModulationControl $(PORT) $(ADDR=0)")
+	field(FLNK, "$(P)_MODE:CALC")
+}
+
+record(scalcout, "$(P)_MODE:CALC")
+{
+    field(INPA, "$(P)MOD:STAT")
+    field(INAA, "$(P)_MODE")
+	field(CALC, "A==1?AA:'DISABLED'")
+    field(OUT, "$(P)MODE PP")
+}
+
+record(stringin, "$(P)MODE")
+{
+
+}
+
+record(bi, "$(P)MOD:PULSE")
+{
+    field(SCAN, "2 second")
+    field(DESC, "Pulse Modulation enabled")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MOD:PULSE")
+    field(SDIS, "$(P)DISABLE")
+
+    field(INP, "@aeroflex_common.proto getPulseModulation $(PORT) $(ADDR=0)")
+}
+
+record(bi, "$(P)MOD:PULSE:CW")
+{
+    field(SCAN, "2 second")
+    field(DESC, "Pulse CW enabled")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MOD:PULSE:CW")
+    field(SDIS, "$(P)DISABLE")
+
+    field(INP, "@aeroflex_common.proto getPulseCWSupression $(PORT) $(ADDR=0)")
+}
+
 ### SIMULATION RECORDS ###
 
 record(ai,"$(P)SIM:CARRIER_FREQ")
@@ -154,4 +235,22 @@ record(stringin,"$(P)SIM:ERROR")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
+}
+
+record(bi, "$(P)SIM:MOD:PULSE")
+{
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+}
+
+record(bi, "$(P)SIM:MOD:STAT")
+{
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+}
+
+record(bi, "$(P)SIM:MOD:PULSE:CW")
+{
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
 }

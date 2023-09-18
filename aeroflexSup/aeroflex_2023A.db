@@ -1,30 +1,3 @@
-record(mbbi, "$(P)MODE")
-{
-    field(SCAN, "2 second")
-    field(DESC, "Get modulation")
-    field(DTYP, "stream")
-
-    field(INP, "@aeroflex_$(DEV_TYPE).proto getModulation $(PORT) $(ADDR=0)")
-	
-	field(ZRST, "FM,AM,PULSE")
-	field(ONST, "FM,AM")
-	field(TWST, "PM,AM,PULSE")
-	field(THST, "PM,AM")
-	field(FRST, "AM,PULSE")
-	field(FVST, "AM")
-	field(SXST, "FM,PULSE")
-	field(SVST, "FM")
-	field(EIST, "PM,PULSE")
-	field(NIST, "PM")
-	field(TEST, "FSK2L,PULSE")
-	field(ELST, "FSK2L")
-	field(TVST, "FSK4L")
-	
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:MODE")
-    field(SDIS, "$(P)DISABLE")
-}
-
 record(mbbo, "$(P)MODE:SP")
 {
     field(DESC, "Set modulation")

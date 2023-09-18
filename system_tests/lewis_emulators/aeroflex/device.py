@@ -17,6 +17,7 @@ class SimulatedAeroflex(StateMachineDevice):
         self.rf_lvl_inc = 3
         self.rf_lvl_status = 'ON'
         self.modulation_mode = 'PM'
+        self.modulation_control = 'ON'
         self.connected = True
         self.triggered = False
         self.error = '100, I AM ERROR'

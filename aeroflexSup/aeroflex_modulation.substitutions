@@ -1,0 +1,11 @@
+file "aeroflex_modulation.template" { 
+  pattern  {P, ADDR,   MOD, FUNC}
+
+    {"\$(P)", "\$(ADDR=0)", "FM1",  "getFM1Modulation"}
+    {"\$(P)", "\$(ADDR=0)", "FM2",  "getFM2Modulation"}
+    {"\$(P)", "\$(ADDR=0)", "PM1",  "getPM1Modulation"}
+    {"\$(P)", "\$(ADDR=0)", "PM2",  "getPM2Modulation"}
+    {"\$(P)", "\$(ADDR=0)", "AM1",  "getAM1Modulation"}
+    {"\$(P)", "\$(ADDR=0)", "AM2",  "getAM2Modulation"}
+    {"\$(P)", "\$(ADDR=0)", "WBFM", "getWBFMModulation"}
+}

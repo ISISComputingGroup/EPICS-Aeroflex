@@ -49,3 +49,13 @@ class AeroflexTests(object):
         self.ca.set_pv_value("RF_LEVEL:STATUS:SP", 0)
 
         self.ca.assert_that_pv_is("RF_STATUS", "OFF")
+
+    @skip_if_recsim("Requires emulator for backdoor access.")
+    def test_WHEN_device_disconnects_THEN_pvs_go_into_alarm(self):
+        pv = "RF_STATUS"
+        self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.NONE)
+        self._lewis.backdoor_command(["interface","disconnect"]) # backdoor_emulator_disconnect_device()
+        self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.INVALID, timeout=30)
+        self._lewis.backdoor_command(["interface","connect"]) # backdoor_emulator_connect_device()
+        self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.NONE, timeout=30)
+ 

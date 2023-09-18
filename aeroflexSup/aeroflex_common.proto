@@ -3,32 +3,98 @@ OutTerminator = '\n';
 
 setCarFreq {
 	out "CFRQ:VALUE %fMHZ";
+	wait 100;
 }
 
 getRFLevel {
-	out "rflv?";
+	out "RFLV?";
 	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %f;INC %*f;%*s ";
 }
 
 getRFStatus {
-	out "rflv?";
+	out "RFLV?";
 	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %*f;INC %*f;%s ";
 }
 
 setRFLevel {
 	out "RFLV:VALUE %f";
+	wait 100;
 }
 
 setRFOutput {
 	out "RFLV:%s";
+	wait 100;
 	@init{getRFStatus;}
 }
 
 getError {
-	out "error?";
+	out "ERROR?";
 	in "%/(.{0,39})/";
 }
 
 reset {
 	out "*RST";
+	wait 100;
+}
+
+# we use a string not enum as there are a lot of possible modes and
+# they can come in different orders 
+getModulation {
+	out "MODE?";
+	in ":MODE %s";
+}
+
+getModulationControl {
+	out "MOD?";
+	in ":MOD:%{OFF|ON}";
+}
+
+setModulationControl {
+    out "MOD %{OFF|ON}";
+	wait 100;
+}
+	
+getPulseModulation {
+    out "PULSE?";
+	in ":PULSE:%{OFF|ON}";
+}
+
+getPulseCWSupression {
+    out "PULSE:CAL?";
+	in ":PULSE:CAL:%{DISABLE|ENABLE}";
+}
+
+getFM1Modulation {
+    out "FM1?";
+	in ":FM1:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+}
+
+getFM2Modulation {
+    out "FM2?";
+	in ":FM2:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+}
+
+getPM1Modulation {
+    out "PM1?";
+	in ":PM1:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+}
+
+getPM2Modulation {
+    out "PM2?";
+	in ":PM2:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+}
+
+getAM1Modulation {
+    out "AM1?";
+	in ":AM1:DEPTH %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+}
+
+getAM2Modulation {
+    out "AM2?";
+	in ":AM2:DEPTH %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+}
+
+getWBFMModulation {
+    out "WBFM?";
+	in ":WBFM:DEVN %*f;%*/[^;]*/;%{OFF|ON}";
 }
