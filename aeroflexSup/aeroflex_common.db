@@ -17,6 +17,27 @@ record(bo, "$(P)DISABLE")
     field(ONAM, "COMMS DISABLED")
 }
 
+record(bi, "$(P)CMODE_RBV") {
+    field(DTYP, "Soft Channel")
+    field(VAL, "$(DISABLE=0)")
+    field(SCAN, "Passive")
+    field(INP, "$(P)CMODE:SP CP")
+    field(ZNAM, "REMOTE")
+    field(ONAM, "LOCAL")
+}
+
+record(bo, "$(P)CMODE:SP") 
+{
+    field(DTYP, "Raw Soft Channel")
+    field(DESC, "Enable Local or Remote Mode")
+    field(ZRST, "REMOTE")
+    field(ONST, "LOCAL")
+	field(ZRVL, "0")
+	field(ONVL, "1")  
+    field(OUT, "$(P)DISABLE PP")
+    field(FLNK, "$(P)CMODE_RBV.PROC")
+}
+
 record(ai, "$(P)_CARRIER_FREQ_RAW")
 {
     field(SCAN, "2 second")
@@ -70,6 +91,7 @@ record(stringin, "$(P)RF_STATUS") {
     field(DESC, "RF status")
     field(DTYP, "stream")
     field(INP, "@aeroflex_common.proto getRFStatus $(PORT) $(ADDR=0)")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ai, "$(P)RF_LEVEL")
@@ -130,6 +152,7 @@ record(ao, "$(P)RESET")
     field(DESC, "Reset")
 	field(DTYP, "stream")
 	field(OUT, "@aeroflex_common.proto reset $(PORT) $(ADDR=0)")
+    field(SDIS, "$(P)DISABLE")
 }
 
 ### SIMULATION RECORDS ###
