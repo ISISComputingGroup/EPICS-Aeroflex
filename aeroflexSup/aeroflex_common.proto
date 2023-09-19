@@ -44,6 +44,11 @@ getModulation {
 	in ":MODE %s";
 }
 
+setModulation {
+	out "MODE %s";
+	wait 200;
+}
+
 getModulationControl {
 	out "MOD?";
 	in ":MOD:%{OFF|ON}";

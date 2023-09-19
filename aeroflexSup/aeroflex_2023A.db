@@ -3,7 +3,7 @@ record(mbbo, "$(P)MODE:SP")
     field(DESC, "Set modulation")
     field(SCAN, "Passive")
     field(DTYP, "stream")
-    field(OUT, "@aeroflex_$(DEV_TYPE).proto setModulation $(PORT) $(ADDR=0)")
+    field(OUT, "@aeroflex_common.proto setModulation $(PORT) $(ADDR=0)")
 	
 	field(ZRST, "FM,AM,PULSE")
 	field(ONST, "FM,AM")
@@ -26,7 +26,7 @@ record(mbbo, "$(P)MODE:SP")
 
 ### SIMULATION RECORDS ###
 
-record(mbbi,"$(P)SIM:MODE")
+record(stringin,"$(P)SIM:MODE")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")

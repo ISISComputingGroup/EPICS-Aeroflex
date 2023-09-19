@@ -5,8 +5,3 @@ getCarrierFrequency {
 	out "CFRQ?";
 	in ":CFRQ:VALUE %f;INC %*f";
 }
-
-setModulation {
-	out "MODE %{FM,PULSE|PM,PULSE|FM,AM|PM,AM|AM|FM|PM}";
-	wait 1500;
-}

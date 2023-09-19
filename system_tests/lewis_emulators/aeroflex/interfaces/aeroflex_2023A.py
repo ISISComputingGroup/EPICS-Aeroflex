@@ -25,10 +25,3 @@ class Aeroflex2023AStreamInterface(CommonStreamInterface, StreamInterface):
         self._device.modulation_mode = 'AM'
         
         return ''
-        
-    def set_modulation(self, new_modulation_mode):
-        cleaned_input = new_modulation_mode.replace('1','')
-        split_modulation_val = cleaned_input.split('m')[0]
-        self._device.modulation_mode = split_modulation_val
-        
-        return ''

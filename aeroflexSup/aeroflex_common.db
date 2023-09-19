@@ -63,6 +63,9 @@ record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
     field(ONST, "ON")
     field(OUT, "@aeroflex_common.proto setRFOutput $(PORT) $(ADDR=0)")
 	field(FLNK, "$(P)RF_STATUS.PROC")
+    field(SDIS, "$(P)DISABLE")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_STATUS")
 }
 
 record(stringin, "$(P)RF_STATUS") {
@@ -70,6 +73,9 @@ record(stringin, "$(P)RF_STATUS") {
     field(DESC, "RF status")
     field(DTYP, "stream")
     field(INP, "@aeroflex_common.proto getRFStatus $(PORT) $(ADDR=0)")
+    field(SDIS, "$(P)DISABLE")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_STATUS")
 }
 
 record(ai, "$(P)RF_LEVEL")
@@ -132,7 +138,7 @@ record(ao, "$(P)RESET")
 	field(OUT, "@aeroflex_common.proto reset $(PORT) $(ADDR=0)")
 }
 
-record(bo, "$(P)MOD:ENABLE")
+record(bo, "$(P)MOD:ENABLE:SP")
 {
     field(DESC, "Modulation enable")
     field(DTYP, "stream")
@@ -141,6 +147,9 @@ record(bo, "$(P)MOD:ENABLE")
 
     field(OUT, "@aeroflex_common.proto setModulationControl $(PORT) $(ADDR=0)")
 	field(FLNK, "$(P)_MODE")
+    field(SIML, "$(P)SIM")
+    field(SDIS, "$(P)DISABLE")
+    field(SIOL, "$(P)SIM:MOD:ENABLE")
 }
 
 record(stringin, "$(P)_MODE")
@@ -154,11 +163,11 @@ record(stringin, "$(P)_MODE")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:MODE")
     field(SDIS, "$(P)DISABLE")
-	field(FLNK, "$(P)MOD:STAT")
+	field(FLNK, "$(P)MOD:ENABLE")
 }
 
 # global modulation on/off
-record(bi, "$(P)MOD:STAT")
+record(bi, "$(P)MOD:ENABLE")
 {
     field(DESC, "Modulation enabled")
     field(DTYP, "stream")
@@ -166,7 +175,7 @@ record(bi, "$(P)MOD:STAT")
 	field(ONAM, "ON")
     field(SIML, "$(P)SIM")
     field(SDIS, "$(P)DISABLE")
-    field(SIOL, "$(P)SIM:MOD:STAT")
+    field(SIOL, "$(P)SIM:MOD:ENABLE")
 
     field(INP, "@aeroflex_common.proto getModulationControl $(PORT) $(ADDR=0)")
 	field(FLNK, "$(P)_MODE:CALC")
@@ -174,7 +183,7 @@ record(bi, "$(P)MOD:STAT")
 
 record(scalcout, "$(P)_MODE:CALC")
 {
-    field(INPA, "$(P)MOD:STAT")
+    field(INPA, "$(P)MOD:ENABLE")
     field(INAA, "$(P)_MODE")
 	field(CALC, "A==1?AA:'DISABLED'")
     field(OUT, "$(P)MODE PP")
@@ -243,10 +252,11 @@ record(bi, "$(P)SIM:MOD:PULSE")
 	field(ONAM, "ON")
 }
 
-record(bi, "$(P)SIM:MOD:STAT")
+record(bi, "$(P)SIM:MOD:ENABLE")
 {
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
+	field(VAL, "1")
 }
 
 record(bi, "$(P)SIM:MOD:PULSE:CW")
