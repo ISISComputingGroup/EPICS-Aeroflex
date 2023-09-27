@@ -24,7 +24,6 @@ record(bi, "$(P)CMODE") {
     field(INP, "$(P)CMODE:SP CP")
     field(ZNAM, "REMOTE")
     field(ONAM, "LOCAL")
-    field(alias, "$(P)CMODE:SP:RBV")
 }
 alias("$(P)CMODE", "$(P)CMODE:SP:RBV") 
 
