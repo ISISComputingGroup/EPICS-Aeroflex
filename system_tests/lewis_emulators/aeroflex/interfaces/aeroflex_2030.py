@@ -25,4 +25,3 @@ class Aeroflex2030StreamInterface(CommonStreamInterface, StreamInterface):
         self._device.modulation_mode = 'AM1'
         
         return ''
-	

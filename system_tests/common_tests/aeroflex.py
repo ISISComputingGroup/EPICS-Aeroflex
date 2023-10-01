@@ -58,4 +58,4 @@ class AeroflexTests(object):
         self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.INVALID, timeout=30)
         self._lewis.backdoor_command(["interface","connect"]) # backdoor_emulator_connect_device()
         self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.NONE, timeout=30)
- 
+
