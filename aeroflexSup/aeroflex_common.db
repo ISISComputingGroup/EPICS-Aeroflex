@@ -29,12 +29,11 @@ alias("$(P)CMODE", "$(P)CMODE:SP:RBV")
 
 record(bo, "$(P)CMODE:SP") 
 {
-    field(DTYP, "Raw Soft Channel")
+    field(DTYP, "Soft Channel")
     field(DESC, "Enable Local or Remote Mode")
-    field(ZRST, "REMOTE")
-    field(ONST, "LOCAL")
-    field(ZNAM, "0")
-    field(ONAM, "1")  
+    field(ZNAM, "REMOTE")
+    field(ONAM, "LOCAL")
+    field(UDFS, "NO_ALARM")
     field(OUT, "$(P)DISABLE PP")
 }
 
