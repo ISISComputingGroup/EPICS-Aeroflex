@@ -17,12 +17,32 @@ record(bo, "$(P)DISABLE")
     field(ONAM, "COMMS DISABLED")
 }
 
+record(bi, "$(P)CMODE") {
+    field(DTYP, "Soft Channel")
+    field(VAL, "$(DISABLE=0)")
+    field(SCAN, "Passive")
+    field(INP, "$(P)CMODE:SP CP")
+    field(ZNAM, "REMOTE")
+    field(ONAM, "LOCAL")
+}
+alias("$(P)CMODE", "$(P)CMODE:SP:RBV") 
+
+record(bo, "$(P)CMODE:SP") 
+{
+    field(DTYP, "Soft Channel")
+    field(DESC, "Enable Local or Remote Mode")
+    field(ZNAM, "REMOTE")
+    field(ONAM, "LOCAL")
+    field(UDFS, "NO_ALARM")
+    field(OUT, "$(P)DISABLE PP")
+}
+
 record(ai, "$(P)_CARRIER_FREQ_RAW")
 {
     field(SCAN, "2 second")
     field(DESC, "Get unscaled carrier frequency")
     field(DTYP, "stream")
-	field(FLNK, "$(P)CARRIER_FREQ:RBV")
+    field(FLNK, "$(P)CARRIER_FREQ:RBV")
     field(INP, "@aeroflex_$(DEV_TYPE).proto getCarrierFrequency $(PORT) $(ADDR=0)")
     field(EGU, "Hz")
 
@@ -33,36 +53,36 @@ record(ai, "$(P)_CARRIER_FREQ_RAW")
 
 record(calc, "$(P)CARRIER_FREQ:RBV")
 {
-	field(DESC, "Scaled carrier frequency")
-	field(INPA, "$(P)_CARRIER_FREQ_RAW")
+    field(DESC, "Scaled carrier frequency")
+    field(INPA, "$(P)_CARRIER_FREQ_RAW")
     field(PREC, 2)
     field(EGU, "MHz")
-	field(CALC, "A * (10**-6)")
+    field(CALC, "A * (10**-6)")
 }
 
 record(ao, "$(P)CARRIER_FREQ:SP")
 {
     field(DESC, "Carrier frequency")
     field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto setCarFreq $(PORT) $(ADDR=0)")
-	field(PREC, "2")
+    field(OUT, "@aeroflex_common.proto setCarFreq $(PORT) $(ADDR=0)")
+    field(PREC, "2")
     field(EGU, "MHz") 
 	
-	field(SIML, "$(P)SIM")
+    field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:CARRIER_FREQ:SP")
     field(SDIS, "$(P)DISABLE")
-	field(FLNK, "$(P)_CARRIER_FREQ_RAW.PROC")
+    field(FLNK, "$(P)_CARRIER_FREQ_RAW.PROC")
 }
 
 record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
     field(DESC, "Set RF level status ON/OFF")
-	field(DTYP, "stream")
+    field(DTYP, "stream")
     field(ZRVL, 0)
     field(ONVL, 1)
     field(ZRST, "OFF")
     field(ONST, "ON")
     field(OUT, "@aeroflex_common.proto setRFOutput $(PORT) $(ADDR=0)")
-	field(FLNK, "$(P)RF_STATUS.PROC")
+    field(FLNK, "$(P)RF_STATUS.PROC")
 }
 
 record(stringin, "$(P)RF_STATUS") {
@@ -70,6 +90,7 @@ record(stringin, "$(P)RF_STATUS") {
     field(DESC, "RF status")
     field(DTYP, "stream")
     field(INP, "@aeroflex_common.proto getRFStatus $(PORT) $(ADDR=0)")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(ai, "$(P)RF_LEVEL")
@@ -79,8 +100,8 @@ record(ai, "$(P)RF_LEVEL")
     field(DTYP, "stream")
     field(EGU, "dBm")
     field(INP, "@aeroflex_common.proto getRFLevel $(PORT) $(ADDR=0)")
-	field(PREC, "$(RF_PREC)")
-	info(archive, "VAL")
+    field(PREC, "$(RF_PREC)")
+    info(archive, "VAL")
 
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:RF_LEVEL")
@@ -90,13 +111,13 @@ record(ai, "$(P)RF_LEVEL")
 record(ao, "$(P)RF_LEVEL:SP")
 {
     field(DESC, "Set RF level")
-	field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto setRFLevel $(PORT) $(ADDR=0)")
-	field(PREC, "$(RF_PREC)")
+    field(DTYP, "stream")
+    field(OUT, "@aeroflex_common.proto setRFLevel $(PORT) $(ADDR=0)")
+    field(PREC, "$(RF_PREC)")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:RF_LEVEL:SP")
     field(SDIS, "$(P)DISABLE")
-	field(FLNK, "$(P)RF_LEVEL.PROC")
+    field(FLNK, "$(P)RF_LEVEL.PROC")
 }
 
 record(stringin, "$(P)ERROR")
@@ -119,7 +140,7 @@ record(stringin, "$(P)ERROR")
 record(stringin, "$(P)DEV_TYPE")
 {
     field(DESC, "Dev type")
-	field(UDFS, "NO_ALARM")
+    field(UDFS, "NO_ALARM")
 
     field(VAL, "$(DEV_TYPE)")
     field(SDIS, "$(P)DISABLE")
@@ -128,8 +149,9 @@ record(stringin, "$(P)DEV_TYPE")
 record(ao, "$(P)RESET")
 {
     field(DESC, "Reset")
-	field(DTYP, "stream")
-	field(OUT, "@aeroflex_common.proto reset $(PORT) $(ADDR=0)")
+    field(DTYP, "stream")
+    field(OUT, "@aeroflex_common.proto reset $(PORT) $(ADDR=0)")
+    field(SDIS, "$(P)DISABLE")
 }
 
 ### SIMULATION RECORDS ###
