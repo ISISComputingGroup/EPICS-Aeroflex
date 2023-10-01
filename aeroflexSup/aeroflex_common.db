@@ -21,7 +21,7 @@ record(bi, "$(P)CMODE") {
     field(DTYP, "Soft Channel")
     field(VAL, "$(DISABLE=0)")
     field(SCAN, "Passive")
-    field(INP, "$(P)CMODE:SP CP")
+    field(INP, "$(P)DISABLE CP")
     field(ZNAM, "REMOTE")
     field(ONAM, "LOCAL")
 }
@@ -35,6 +35,20 @@ record(bo, "$(P)CMODE:SP")
     field(ONAM, "LOCAL")
     field(UDFS, "NO_ALARM")
     field(OUT, "$(P)DISABLE PP")
+	field(FLNK, "$(P)_REM.PROC")
+}
+
+# access GPIB remote disable/enable field via asyn record
+record(mbbo, "$(P)_REM")
+{
+    field(DTYP, "Raw Soft Channel")
+	field(DOL, "$(P)CMODE:SP")
+	field(OMSL, "closed_loop")
+    field(ZRST, "REMOTE")
+    field(ONST, "LOCAL")
+	field(ZRVL, "2")
+	field(ONVL, "1")
+	field(OUT, "$(P)ASYN.REN PP")
 }
 
 record(ai, "$(P)_CARRIER_FREQ_RAW")
@@ -81,6 +95,7 @@ record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
     field(ONVL, 1)
     field(ZRST, "OFF")
     field(ONST, "ON")
+    field(UDFS, "NO_ALARM")
     field(OUT, "@aeroflex_common.proto setRFOutput $(PORT) $(ADDR=0)")
     field(FLNK, "$(P)RF_STATUS.PROC")
     field(SDIS, "$(P)DISABLE")
