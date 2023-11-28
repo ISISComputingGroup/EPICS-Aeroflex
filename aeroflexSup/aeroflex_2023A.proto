@@ -2,15 +2,6 @@ InTerminator = '\n';
 OutTerminator = '\n';
 
 getCarrierFrequency {
-	out "cfrq?";
+	out "CFRQ?";
 	in ":CFRQ:VALUE %f;INC %*f;MODE %*s";
-}
-
-getModulation {
-	out "mode?";
-	in ":MODE %{FM,AM,PULSE|FM,AM|PM,AM,PULSE|PM,AM|AM,PULSE|AM|FM,PULSE|FM|PM,PULSE|PM|FSK2L,PULSE|FSK2L|FSK4L}";
-}
-
-setModulation {
-	out "MODE %{FM,AM,PULSE|FM,AM|PM,AM,PULSE|PM,AM|AM,PULSE|AM|FM,PULSE|FM|PM,PULSE|PM|FSK2L,PULSE|FSK2L|FSK4L}";
 }
