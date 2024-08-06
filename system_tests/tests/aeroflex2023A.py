@@ -1,13 +1,14 @@
-import sys, os
+import os
+import sys
 import unittest
 
-from utils.test_modes import TestModes
 from parameterized import parameterized
-from utils.ioc_launcher import get_default_ioc_dir, EPICS_TOP
+from utils.ioc_launcher import EPICS_TOP, get_default_ioc_dir
+from utils.test_modes import TestModes
 from utils.testing import skip_if_recsim
-sys.path.append(os.path.join(EPICS_TOP, "support", "aeroflex", "master", "system_tests", "common_tests"))
-from aeroflex import AeroflexTests, DEVICE_PREFIX, EMULATOR_NAME
 
+sys.path.append(os.path.join(EPICS_TOP, "support", "aeroflex", "master", "system_tests", "common_tests"))
+from aeroflex import DEVICE_PREFIX, EMULATOR_NAME, AeroflexTests
 
 TEST_MODES = [TestModes.DEVSIM, TestModes.RECSIM]
 

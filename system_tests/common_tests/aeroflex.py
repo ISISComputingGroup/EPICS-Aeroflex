@@ -1,8 +1,6 @@
 from parameterized import parameterized
 from utils.channel_access import ChannelAccess
 from utils.testing import get_running_lewis_and_ioc, skip_if_recsim
-from genie_python import channel_access_exceptions
-
 
 # Device prefix
 DEVICE_PREFIX = "AEROFLEX_01"
