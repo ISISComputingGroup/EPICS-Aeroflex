@@ -51,7 +51,7 @@ setModulation {
 
 getModulationControl {
 	out "MOD?";
-	in ":MOD:%{OFF|ON}";
+	in ":MOD:%{OFF|ON} ";
 }
 
 setModulationControl {
@@ -60,6 +60,7 @@ setModulationControl {
 }
 	
 getPulseModulation {
+    ExtraInput = ignore; # can get a ;EXT on soem devices
     out "PULSE?";
 	in ":PULSE:%{OFF|ON}";
 }
@@ -71,32 +72,32 @@ getPulseCWSupression {
 
 getFM1Modulation {
     out "FM1?";
-	in ":FM1:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+	in ":FM1:DEVN %*f;%*/[^;]*/;%{OFF|ON} ;INC %*f";
 }
 
 getFM2Modulation {
     out "FM2?";
-	in ":FM2:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+	in ":FM2:DEVN %*f;%*/[^;]*/;%{OFF|ON} ;INC %*f";
 }
 
 getPM1Modulation {
     out "PM1?";
-	in ":PM1:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+	in ":PM1:DEVN %*f;%*/[^;]*/;%{OFF|ON} ;INC %*f";
 }
 
 getPM2Modulation {
     out "PM2?";
-	in ":PM2:DEVN %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+	in ":PM2:DEVN %*f;%*/[^;]*/;%{OFF|ON} ;INC %*f";
 }
 
 getAM1Modulation {
     out "AM1?";
-	in ":AM1:DEPTH %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+	in ":AM1:DEPTH %*f;%*/[^;]*/;%{OFF|ON} ;INC %*f";
 }
 
 getAM2Modulation {
     out "AM2?";
-	in ":AM2:DEPTH %*f;%*/[^;]*/;%{OFF|ON};INC %*f";
+	in ":AM2:DEPTH %*f;%*/[^;]*/;%{OFF|ON} ;INC %*f";
 }
 
 getWBFMModulation {

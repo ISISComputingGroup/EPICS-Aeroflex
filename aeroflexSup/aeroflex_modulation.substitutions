@@ -7,5 +7,5 @@ file "aeroflex_modulation.template" {
     {"\$(P)", "\$(ADDR=0)", "PM2",  "getPM2Modulation"}
     {"\$(P)", "\$(ADDR=0)", "AM1",  "getAM1Modulation"}
     {"\$(P)", "\$(ADDR=0)", "AM2",  "getAM2Modulation"}
-    {"\$(P)", "\$(ADDR=0)", "WBFM", "getWBFMModulation"}
+#    {"\$(P)", "\$(ADDR=0)", "WBFM", "getWBFMModulation"}
 }
