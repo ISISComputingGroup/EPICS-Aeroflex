@@ -69,7 +69,7 @@ record(calc, "$(P)CARRIER_FREQ:RBV")
 {
     field(DESC, "Scaled carrier frequency")
     field(INPA, "$(P)_CARRIER_FREQ_RAW")
-    field(PREC, 2)
+    field(PREC, 6)
     field(EGU, "MHz")
     field(CALC, "A * (10**-6)")
 }
@@ -79,7 +79,7 @@ record(ao, "$(P)CARRIER_FREQ:SP")
     field(DESC, "Carrier frequency")
     field(DTYP, "stream")
     field(OUT, "@aeroflex_common.proto setCarFreq $(PORT) $(ADDR=0)")
-    field(PREC, "2")
+    field(PREC, "6")
     field(EGU, "MHz") 
 	
     field(SIML, "$(P)SIM")
