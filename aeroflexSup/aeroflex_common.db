@@ -244,19 +244,19 @@ record(bi, "$(P)MOD:PULSE")
     field(INP, "@aeroflex_common.proto getPulseModulation $(PORT) $(ADDR=0)")
 }
 
-record(bi, "$(P)MOD:PULSE:CW")
-{
-    field(SCAN, "2 second")
-    field(DESC, "Pulse CW enabled")
-    field(DTYP, "stream")
-	field(ZNAM, "OFF")
-	field(ONAM, "ON")
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:MOD:PULSE:CW")
-    field(SDIS, "$(P)DISABLE")
+#record(bi, "$(P)MOD:PULSE:CW")
+#{
+#    field(SCAN, "2 second")
+#    field(DESC, "Pulse CW enabled")
+#    field(DTYP, "stream")
+#	field(ZNAM, "OFF")
+#	field(ONAM, "ON")
+#    field(SIML, "$(P)SIM")
+#    field(SIOL, "$(P)SIM:MOD:PULSE:CW")
+#    field(SDIS, "$(P)DISABLE")
 
-    field(INP, "@aeroflex_common.proto getPulseCWSupression $(PORT) $(ADDR=0)")
-}
+#    field(INP, "@aeroflex_common.proto getPulseCWSupression $(PORT) $(ADDR=0)")
+#}
 
 ### SIMULATION RECORDS ###
 
