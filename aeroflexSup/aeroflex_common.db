@@ -21,7 +21,7 @@ record(bi, "$(P)CMODE") {
     field(DTYP, "Soft Channel")
     field(VAL, "$(DISABLE=0)")
     field(SCAN, "Passive")
-    field(INP, "$(P)CMODE:SP CP")
+    field(INP, "$(P)DISABLE CP")
     field(ZNAM, "REMOTE")
     field(ONAM, "LOCAL")
 }
@@ -35,6 +35,20 @@ record(bo, "$(P)CMODE:SP")
     field(ONAM, "LOCAL")
     field(UDFS, "NO_ALARM")
     field(OUT, "$(P)DISABLE PP")
+	field(FLNK, "$(P)_REM.PROC")
+}
+
+# access GPIB remote disable/enable field via asyn record
+record(mbbo, "$(P)_REM")
+{
+    field(DTYP, "Raw Soft Channel")
+	field(DOL, "$(P)CMODE:SP")
+	field(OMSL, "closed_loop")
+    field(ZRST, "REMOTE")
+    field(ONST, "LOCAL")
+	field(ZRVL, "2")
+	field(ONVL, "1")
+	field(OUT, "$(P)ASYN.REN PP")
 }
 
 record(ai, "$(P)_CARRIER_FREQ_RAW")
@@ -81,8 +95,12 @@ record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
     field(ONVL, 1)
     field(ZRST, "OFF")
     field(ONST, "ON")
+    field(UDFS, "NO_ALARM")
     field(OUT, "@aeroflex_common.proto setRFOutput $(PORT) $(ADDR=0)")
     field(FLNK, "$(P)RF_STATUS.PROC")
+    field(SDIS, "$(P)DISABLE")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_STATUS")
 }
 
 record(stringin, "$(P)RF_STATUS") {
@@ -91,6 +109,8 @@ record(stringin, "$(P)RF_STATUS") {
     field(DTYP, "stream")
     field(INP, "@aeroflex_common.proto getRFStatus $(PORT) $(ADDR=0)")
     field(SDIS, "$(P)DISABLE")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RF_STATUS")
 }
 
 record(ai, "$(P)RF_LEVEL")
@@ -154,6 +174,90 @@ record(ao, "$(P)RESET")
     field(SDIS, "$(P)DISABLE")
 }
 
+record(bo, "$(P)MOD:ENABLE:SP")
+{
+    field(DESC, "Modulation enable")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+
+    field(OUT, "@aeroflex_common.proto setModulationControl $(PORT) $(ADDR=0)")
+	field(FLNK, "$(P)_MODE")
+    field(SIML, "$(P)SIM")
+    field(SDIS, "$(P)DISABLE")
+    field(SIOL, "$(P)SIM:MOD:ENABLE")
+}
+
+record(stringin, "$(P)_MODE")
+{
+    field(SCAN, "2 second")
+    field(DESC, "Get modulation")
+    field(DTYP, "stream")
+
+    field(INP, "@aeroflex_common.proto getModulation $(PORT) $(ADDR=0)")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MODE")
+    field(SDIS, "$(P)DISABLE")
+    field(FLNK, "$(P)MOD:ENABLE")
+}
+
+# global modulation on/off
+record(bi, "$(P)MOD:ENABLE")
+{
+    field(DESC, "Modulation enabled")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    field(SIML, "$(P)SIM")
+    field(SDIS, "$(P)DISABLE")
+    field(SIOL, "$(P)SIM:MOD:ENABLE")
+
+    field(INP, "@aeroflex_common.proto getModulationControl $(PORT) $(ADDR=0)")
+	field(FLNK, "$(P)_MODE:CALC")
+}
+
+record(scalcout, "$(P)_MODE:CALC")
+{
+    field(INPA, "$(P)MOD:ENABLE")
+    field(INAA, "$(P)_MODE")
+	field(CALC, "A==1?AA:'DISABLED'")
+    field(OUT, "$(P)MODE PP")
+}
+
+record(stringin, "$(P)MODE")
+{
+
+}
+
+record(bi, "$(P)MOD:PULSE")
+{
+    field(SCAN, "2 second")
+    field(DESC, "Pulse Modulation enabled")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MOD:PULSE")
+    field(SDIS, "$(P)DISABLE")
+
+    field(INP, "@aeroflex_common.proto getPulseModulation $(PORT) $(ADDR=0)")
+}
+
+record(bi, "$(P)MOD:PULSE:CW")
+{
+    field(SCAN, "2 second")
+    field(DESC, "Pulse CW enabled")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MOD:PULSE:CW")
+    field(SDIS, "$(P)DISABLE")
+
+    field(INP, "@aeroflex_common.proto getPulseCWSupression $(PORT) $(ADDR=0)")
+}
+
 ### SIMULATION RECORDS ###
 
 record(ai,"$(P)SIM:CARRIER_FREQ")
@@ -176,4 +280,23 @@ record(stringin,"$(P)SIM:ERROR")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
+}
+
+record(bi, "$(P)SIM:MOD:PULSE")
+{
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+}
+
+record(bi, "$(P)SIM:MOD:ENABLE")
+{
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+	field(VAL, "1")
+}
+
+record(bi, "$(P)SIM:MOD:PULSE:CW")
+{
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
 }

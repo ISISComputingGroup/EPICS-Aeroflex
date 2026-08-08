@@ -1,0 +1,20 @@
+
+record(bi, "$(P)MOD:$(MOD)")
+{
+    field(SCAN, "2 second")
+    field(DESC, "$(MOD) Modulation enabled")
+    field(DTYP, "stream")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:MOD:$(MOD)")
+    field(SDIS, "$(P)DISABLE")
+
+    field(INP, "@aeroflex_common.proto $(FUNC) $(PORT) $(ADDR=0)")
+}
+
+record(bi, "$(P)SIM:MOD:$(MOD)")
+{
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+}

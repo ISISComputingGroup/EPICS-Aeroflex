@@ -1,38 +1,19 @@
-record(mbbi, "$(P)MODE")
-{
-    field(SCAN, "2 second")
-    field(DESC, "Get modulation")
-    field(DTYP, "stream")
-
-    field(INP, "@aeroflex_$(DEV_TYPE).proto getModulation $(PORT) $(ADDR=0)")
-	
-	field(ZRST, "FM1,AM1")
-	field(ONST, "PM1,AM1")
-	field(TWST, "AM1")
-	field(THST, "PULSE,FM1")
-	field(FRST, "FM1")
-	field(FVST, "PULSE,PM1")
-	field(SXST, "PM1")
-	
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:MODE")
-    field(SDIS, "$(P)DISABLE")
-}
 
 record(mbbo, "$(P)MODE:SP")
 {
     field(DESC, "Set modulation")
     field(SCAN, "Passive")
     field(DTYP, "stream")
-    field(OUT, "@aeroflex_$(DEV_TYPE).proto setModulation $(PORT) $(ADDR=0)")
+    field(OUT, "@aeroflex_common.proto setModulation $(PORT) $(ADDR=0)")
 	
-	field(ZRST, "FM,PULSE")
-	field(ONST, "PM,PULSE")
-	field(TWST, "FM,AM")
-	field(THST, "PM,AM")
-	field(FRST, "AM")
-	field(FVST, "FM")
-	field(SXST, "PM")
+	field(ZRST, "FM1,PULSE")
+	field(ONST, "PM1,PULSE")
+	field(TWST, "FM1,AM1")
+	field(THST, "PM1,AM1")
+	field(FRST, "AM1")
+	field(FVST, "FM1")
+	field(SXST, "PM1")
+	field(SVST, "PULSE")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:MODE:SP")
     field(SDIS, "$(P)DISABLE")
@@ -41,7 +22,7 @@ record(mbbo, "$(P)MODE:SP")
 
 ### SIMULATION RECORDS ###
 
-record(mbbi,"$(P)SIM:MODE")
+record(stringin,"$(P)SIM:MODE")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
