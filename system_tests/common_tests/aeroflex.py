@@ -1,3 +1,6 @@
+import typing
+import unittest
+
 from parameterized import parameterized
 from utils.channel_access import ChannelAccess
 from utils.testing import get_running_lewis_and_ioc, skip_if_recsim
@@ -7,53 +10,59 @@ DEVICE_PREFIX = "AEROFLEX_01"
 EMULATOR_NAME = "aeroflex"
 
 
-class AeroflexTests(object):
+# This class is only valid for classes which also derive from unittest.TestCase,
+# and we can't derive from unittest.TestCase at runtime, because
+# unittest would try to execute them as tests
+class AeroflexTests(unittest.TestCase if typing.TYPE_CHECKING else object):
     """
     Tests for the Aeroflex
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         self._lewis, self._ioc = get_running_lewis_and_ioc(EMULATOR_NAME, DEVICE_PREFIX)
         self.ca = ChannelAccess(device_prefix=DEVICE_PREFIX, default_wait_time=0.0)
 
     @skip_if_recsim("Requires emulator.")
-    def test_GIVEN_new_carrier_freq_WHEN_set_carrier_freq_THEN_new_carrier_freq_set(self):
+    def test_GIVEN_new_carrier_freq_WHEN_set_carrier_freq_THEN_new_carrier_freq_set(self) -> None:
         self.ca.set_pv_value("CARRIER_FREQ:SP", 1100)
 
         self.ca.assert_that_pv_is("CARRIER_FREQ:RBV", 1100)
 
     @parameterized.expand([("Value 1", 1), ("Value 2", 2), ("Value 3", 3.33333)])
-    def test_GIVEN_new_rf_lvl_WHEN_set_rf_lvl_THEN_new_rf_lvl_set(self, _, value):
+    def test_GIVEN_new_rf_lvl_WHEN_set_rf_lvl_THEN_new_rf_lvl_set(
+        self, _: str, value: float
+    ) -> None:
         self.ca.set_pv_value("RF_LEVEL:SP", value)
 
         self.ca.assert_that_pv_is("RF_LEVEL", value)
 
     @skip_if_recsim("Requires emulator for backdoor access.")
-    def test_GIVEN_error_set_THEN_error_returned(self):
+    def test_GIVEN_error_set_THEN_error_returned(self) -> None:
         self._lewis.backdoor_set_on_device("error", "I AM ERROR")
 
         self.ca.assert_that_pv_is("ERROR", "I AM ERROR", timeout=10)
 
     @skip_if_recsim("Requires emulator for backdoor access.")
-    def test_WHEN_rf_set_on_THEN_status_is_on(self):
+    def test_WHEN_rf_set_on_THEN_status_is_on(self) -> None:
         self._lewis.backdoor_set_on_device("rf_lvl_status", "OFF")
         self.ca.set_pv_value("RF_LEVEL:STATUS:SP", 1)
 
         self.ca.assert_that_pv_is("RF_STATUS", "ON")
 
     @skip_if_recsim("Requires emulator for backdoor access.")
-    def test_WHEN_rf_set_on_THEN_status_is_off(self):
+    def test_WHEN_rf_set_on_THEN_status_is_off(self) -> None:
         self._lewis.backdoor_set_on_device("rf_lvl_status", "ON")
         self.ca.set_pv_value("RF_LEVEL:STATUS:SP", 0)
 
         self.ca.assert_that_pv_is("RF_STATUS", "OFF")
 
     @skip_if_recsim("Requires emulator for backdoor access.")
-    def test_WHEN_device_disconnects_THEN_pvs_go_into_alarm(self):
+    def test_WHEN_device_disconnects_THEN_pvs_go_into_alarm(self) -> None:
         pv = "RF_STATUS"
         self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.NONE)
-        self._lewis.backdoor_command(["interface","disconnect"]) # backdoor_emulator_disconnect_device()
+        self._lewis.backdoor_command(
+            ["interface", "disconnect"]
+        )  # backdoor_emulator_disconnect_device()
         self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.INVALID, timeout=30)
-        self._lewis.backdoor_command(["interface","connect"]) # backdoor_emulator_connect_device()
+        self._lewis.backdoor_command(["interface", "connect"])  # backdoor_emulator_connect_device()
         self.ca.assert_that_pv_alarm_is(pv, self.ca.Alarms.NONE, timeout=30)
-

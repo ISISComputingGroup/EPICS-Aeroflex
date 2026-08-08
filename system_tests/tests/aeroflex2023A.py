@@ -31,7 +31,7 @@ class Aeroflex2023ATests(AeroflexTests, unittest.TestCase):
     """
 
     def setUp(self):
-        super(Aeroflex2023ATests, self).setUp()
+        super().setUp()
 
     @parameterized.expand(
         [
@@ -71,5 +71,5 @@ class Aeroflex2023ATests(AeroflexTests, unittest.TestCase):
         self.ca.assert_that_pv_is("MODE", "AM")
 
     def test_GIVEN_rf_prec_set_THEN_rf_prec_is_correct(self):
-        self.ca.assert_that_pv_is('RF_LEVEL.PREC', 6)
-        self.ca.assert_that_pv_is('RF_LEVEL:SP.PREC', 6)
+        self.ca.assert_that_pv_is("RF_LEVEL.PREC", 6)
+        self.ca.assert_that_pv_is("RF_LEVEL:SP.PREC", 6)

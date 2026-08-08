@@ -17,12 +17,15 @@ class Aeroflex2023AStreamInterface(CommonStreamInterface, StreamInterface):
     in_terminator = CommonStreamInterface.in_terminator
     out_terminator = CommonStreamInterface.out_terminator
 
-    def get_carrier_freq(self):
-        return f":CFRQ:VALUE {self._device.carrier_freq_val};INC {self._device.carrier_freq_inc};MODE {self._device.carrier_freq_mode}"
+    def get_carrier_freq(self) -> str:
+        return (
+            f":CFRQ:VALUE {self._device.carrier_freq_val};INC {self._device.carrier_freq_inc};"
+            f"MODE {self._device.carrier_freq_mode}"
+        )
 
-    def reset(self):
+    def reset(self) -> str:
         self._device.carrier_freq_val = 0
         self._device.rf_lvl_val = 0
-        self._device.modulation_mode = 'AM'
-        
-        return ''
+        self._device.modulation_mode = "AM"
+
+        return ""
