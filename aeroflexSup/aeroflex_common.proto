@@ -8,12 +8,12 @@ setCarFreq {
 
 getRFLevel {
 	out "RFLV?";
-	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %f;INC %*f;%*s ";
+	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};VALUE %f;INC %*f;%*s";
 }
 
 getRFStatus {
 	out "RFLV?";
-	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};TYPE %*{EMF|PD};VALUE %*f;INC %*f;%s ";
+	in ":RFLV:UNITS %*{DBM|DBV|DBMV|DBUV|MV|UV|V};VALUE %*f;INC %*f;%s";
 }
 
 setRFLevel {
