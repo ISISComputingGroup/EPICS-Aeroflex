@@ -1,25 +1,21 @@
-from lewis.utils.command_builder import CmdBuilder
 from lewis.core.logging import has_log
+from lewis.utils.command_builder import CmdBuilder
 from lewis.utils.replies import conditional_reply
 
-if_connected = conditional_reply('connected')
+if_connected = conditional_reply("connected")
 
-'''
+"""
 Stream device for Aeroflex
-'''
+"""
+
 
 @has_log
 class CommonStreamInterface(object):
+    in_terminator = "\n"
+    out_terminator = "\n"
 
-    in_terminator = '\n'
-    out_terminator = '\n'
+    MULT_FACTOR = {"k": 1000, "M": 1000000, "G": 1000000000}
 
-    MULT_FACTOR = {
-        'k': 1000,
-        'M': 1000000,
-        'G': 1000000000
-    }
-    
     commands = [
             CmdBuilder('get_carrier_freq').escape('CFRQ?').eos().build(),
             CmdBuilder('get_rf_level').escape('RFLV?').eos().build(),
@@ -43,23 +39,23 @@ class CommonStreamInterface(object):
             CmdBuilder('get_wbfm_modulation').escape('WBFM?').eos().build(),
             
     ]
-        
+
     def handle_error(self, request, error):
-        '''
+        """
         If command is not recognised print and error
 
         Args:
             request: requested string
             error: problem
 
-        '''
-        self.log.error('An error occurred at request ' + repr(request) + ': ' + repr(error))
-        
-        return ''
-    
+        """
+        self.log.error("An error occurred at request " + repr(request) + ": " + repr(error))
+
+        return ""
+
     def get_rf_level(self):
-        return f':RFLV:UNITS {self._device.rf_lvl_unit};TYPE {self._device.rf_lvl_type};VALUE {self._device.rf_lvl_val};INC {self._device.rf_lvl_inc};{self._device.rf_lvl_status} '
-	
+        return f":RFLV:UNITS {self._device.rf_lvl_unit};TYPE {self._device.rf_lvl_type};VALUE {self._device.rf_lvl_val};INC {self._device.rf_lvl_inc};{self._device.rf_lvl_status} "
+
     def get_modulation(self):
         return f':MODE {self._device.modulation_mode}'
         
@@ -76,30 +72,31 @@ class CommonStreamInterface(object):
 
     def get_error(self):
         return self._device.error
-        
+
     def set_carrier_freq(self, new_carrier_freq):
-        new_carrier_freq_val = new_carrier_freq.split('H')[0]
+        new_carrier_freq_val = new_carrier_freq.split("H")[0]
 
         if new_carrier_freq_val[-1:].isnumeric():
             self._device.carrier_freq_val = float(new_carrier_freq_val)
         else:
-            self._device.carrier_freq_val = float(new_carrier_freq_val[:-1]) * self.MULT_FACTOR[new_carrier_freq_val[-1:]]
-        
-        return ''
-	
+            self._device.carrier_freq_val = (
+                float(new_carrier_freq_val[:-1]) * self.MULT_FACTOR[new_carrier_freq_val[-1:]]
+            )
+
+        return ""
+
     def set_rf_level(self, new_rf_lvl_val):
         self._device.rf_lvl_val = new_rf_lvl_val
-        
-        return ''
+
+        return ""
 
     def set_rf_on(self):
-        self._device.rf_lvl_status = 'ON'
+        self._device.rf_lvl_status = "ON"
 
-        return ''
+        return ""
 
     def set_rf_off(self):
-        self._device.rf_lvl_status = 'OFF'
-
+        self._device.rf_lvl_status = "OFF"
         return ''
 
     def get_pulse_modulation(self):
@@ -119,4 +116,3 @@ class CommonStreamInterface(object):
 
     def get_wbfm_modulation(self):
         return f':WBFM:DEVN 100.0;INTF;ON';
-

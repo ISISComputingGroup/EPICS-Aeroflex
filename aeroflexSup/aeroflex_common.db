@@ -100,7 +100,7 @@ record(mbbo, "$(P)RF_LEVEL:STATUS:SP") {
     field(FLNK, "$(P)RF_STATUS.PROC")
     field(SDIS, "$(P)DISABLE")
     field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:RF_STATUS")
+    field(SIOL, "$(P)SIM:RF_LEVEL:STATUS:SP PP")
 }
 
 record(stringin, "$(P)RF_STATUS") {
@@ -299,4 +299,17 @@ record(bi, "$(P)SIM:MOD:PULSE:CW")
 {
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
+}
+
+record(mbbo, "$(P)SIM:RF_LEVEL:STATUS:SP")
+{
+    field(ZRVL, 0)
+    field(ONVL, 1)
+    field(ZRST, "OFF")
+    field(ONST, "ON")
+}
+
+record(stringin, "$(P)SIM:RF_STATUS")
+{
+    field(INP, "$(P)SIM:RF_LEVEL:STATUS:SP CP")
 }
