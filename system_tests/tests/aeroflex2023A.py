@@ -31,7 +31,7 @@ class Aeroflex2023ATests(AeroflexTests, unittest.TestCase):
     """
 
     def setUp(self):
-        super(Aeroflex2023ATests, self).setUp()
+        super().setUp()
 
     @parameterized.expand(
         [
